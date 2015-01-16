@@ -1,4 +1,4 @@
-class RailsDbView::DbViewsCreator
+class RailsDbViews::DbViewsCreator
   attr_reader :views
 
   def initialize

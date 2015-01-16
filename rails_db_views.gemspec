@@ -5,11 +5,11 @@ require "rails_db_view/version"
 
 # Describe your gem and declare its dependencies:
 Gem::Specification.new do |s|
-  s.name        = "rails-db-view"
+  s.name        = "rails-db-views"
   s.version     = RailsDbView::VERSION
   s.authors     = ["Yacine Petitprez"]
   s.email       = ["anykeyh@gmail.com"]
-  s.homepage    = "https://github.com/anykeyh/rails-db-view"
+  s.homepage    = "https://github.com/anykeyh/rails-db-views"
   s.summary     = "Provide tools to create and manage database view through Rails project."
   s.description = ""
 
