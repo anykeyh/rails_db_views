@@ -4,7 +4,7 @@ Provide tools to create and manage database view through your Rails projects.
 
 # Why I've made this gem?
 
-Database views can be really useful as some kind of Read Only objects.
+Database views can be really useful providing kind of read only models.
 They can help you to make your SQL code more reusable, and sometimes are priceless to reduce complexity into models relations.
 
 However, there's no useful tools given by Ruby On Rails to deal with views. Using the classic migration system can be
