@@ -18,7 +18,7 @@ Finally, whenever you migrate and remove a field from a table used by a view, po
 Quite simple. Add rails_db_view in your Gemfile:
 
 ```Gemfile
-    gem 'rails_db_view'
+gem 'rails_db_view'
 ```
 
 Then create your views into `db/views` directory (create the directory if needed).
@@ -44,14 +44,14 @@ In this case, the view creation/drop order is important. I've made a directive s
 In `db/views/view_a.sql`:
 
 ```SQL
-    SELECT 1 as id;
+SELECT 1 as id;
 ```
 
 In `db/views/view_b.sql`:
 
 ```SQL
-    --!require view_a
-    SELECT id FROM view_a
+--!require view_a
+SELECT id FROM view_a
 ```
 
 That's it! You can also use `#!require ... ` instead of `--`. But avoid space between the commentaries characters and the directive (!require).
@@ -61,10 +61,10 @@ That's it! You can also use `#!require ... ` instead of `--`. But avoid space be
 You can add/remove new paths in the initializers of Rails:
 
 ```ruby
-    Rails.configure do |config|
-      config.rails_db_view[:views_path] += %w( /some/view/path )
-      config.rails_db_view[:views_ext] = "*.dbview" #Using custom extensions to override default ".sql" extension.
-    end
+Rails.configure do |config|
+  config.rails_db_view[:views_path] += %w( /some/view/path )
+  config.rails_db_view[:views_ext] = "*.dbview" #Using custom extensions to override default ".sql" extension.
+end
 ```
 
 # Licensing
