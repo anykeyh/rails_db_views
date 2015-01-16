@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    rails-db-view (0.0.1)
+    rails-db-views (0.0.1)
       rails (~> 4.0.1)
       rake-hooks
 
@@ -80,5 +80,5 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  rails-db-view!
+  rails-db-views!
   sqlite3

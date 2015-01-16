@@ -18,7 +18,7 @@ Finally, whenever you migrate and remove a field from a table used by a view, po
 Quite simple. Add rails_db_view in your Gemfile:
 
 ```Gemfile
-gem 'rails_db_view'
+gem 'rails_db_views'
 ```
 
 Then create your views into `db/views` directory (create the directory if needed).
