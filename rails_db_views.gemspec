@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
   s.version     = RailsDbViews::VERSION
   s.authors     = ["Yacine Petitprez"]
   s.email       = ["anykeyh@gmail.com"]
-  s.homepage    = "https://github.com/anykeyh/rails-db-views"
+  s.homepage    = "https://github.com/anykeyh/rails_db_views"
   s.summary     = "Provide tools to create and manage database view through Rails project."
   s.description = ""
 
