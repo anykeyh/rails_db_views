@@ -161,3 +161,8 @@ SQLite3::SQLException: table required already exists: CREATE VIEW required AS SE
   [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
   [1m[35m (0.8ms)[0m  CREATE VIEW required AS SELECT 1 as id
   [1m[36m (0.8ms)[0m  [1mCREATE VIEW hello_world AS SELECT 'HelloWorld' WHERE ( SELECT id FROM required ) IN (1)[0m
+  [1m[36m (1.6ms)[0m  [1mDROP VIEW required[0m
+  [1m[35m (1.0ms)[0m  DROP VIEW hello_world
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.9ms)[0m  CREATE VIEW required AS SELECT 1 as id
+  [1m[36m (1.1ms)[0m  [1mCREATE VIEW hello_world AS SELECT 'HelloWorld' WHERE ( SELECT id FROM required ) IN (1)[0m
