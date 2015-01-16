@@ -62,8 +62,8 @@ You can add/remove new paths in the initializers of Rails:
 
 ```ruby
 Rails.configure do |config|
-  config.rails_db_view[:views_path] += %w( /some/view/path )
-  config.rails_db_view[:views_ext] = "*.dbview" #Using custom extensions to override default ".sql" extension.
+  config.rails_db_views[:views_path] += %w( /some/view/path )
+  config.rails_db_views[:views_ext] = "*.dbview" #Using custom extensions to override default ".sql" extension.
 end
 ```
 
