@@ -69,6 +69,9 @@ end
 
 # Licensing
 
+A project [Kosmogo](http://www.kosmogo.com).
+Based on an idea of Jimmy Wang of ([Ekohe](http://www.ekohe.com))
+
 MIT. Use it, fork it, have fun!
 
 Happy coding!
