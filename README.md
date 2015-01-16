@@ -5,15 +5,13 @@ Provide tools to create and manage database view through your Rails projects.
 # Why I've made this gem?
 
 Database views can be really useful providing kind of read only models.
-They can help you to make your SQL code more reusable, and sometimes are priceless to reduce complexity into models relations.
+They can help you make your SQL code more reusable, clear, and sometimes are priceless to reduce complexity into models relations.
 
-However, there's no useful tools given by Ruby On Rails to deal with views. Using the classic migration system can be
-fastidious if you want to update one of your view.
-Also, rollback/migrate a view is a non-sense, since there's no data integrity
-to manage.
+However, there's no useful tools offered by Ruby On Rails to deal with database views.
+Using the classic migration system can be fastidious if you want to update one of your view.
+Also, rollback/migrate a view is a non-sense, since there's no data integrity to deal with.
 
-Whenever you migrate and remove a field from a table used by a view, postgresql will throw an error, so removing views before applying migration is not an option.
-
+Finally, whenever you migrate and remove a field from a table used by a view, postgresql will throw an error, so removing views before applying migration is not an option.
 
 # How to use
 
