@@ -17,7 +17,9 @@ Finally, whenever you migrate and remove a field from a table used by a view, po
 
 Quite simple. Add rails_db_view in your Gemfile:
 
+```Gemfile
     gem 'rails_db_view'
+```
 
 Then create your views into `db/views` directory (create the directory if needed).
 All your views are files with "sql" extensions, without the directive `CREATE VIEW xxx AS`.
@@ -32,22 +34,25 @@ Whenever you'll do `rake db:migrate` or `rake db:rollback`, prior to applying th
 
 In some case we need to build view using another view as target:
 
-
-    CREATE VIEW view_a AS SELECT 1 as id;
-    CREATE VIEW view_b AS SELECT id FROM view_a;
-
+```SQL
+CREATE VIEW view_a AS SELECT 1 as id;
+CREATE VIEW view_b AS SELECT id FROM view_a;
+```
 
 In this case, the view creation/drop order is important. I've made a directive system to manage view order:
 
 In `db/views/view_a.sql`:
 
+```SQL
     SELECT 1 as id;
+```
 
 In `db/views/view_b.sql`:
 
+```SQL
     --!require view_a
     SELECT id FROM view_a
-
+```
 
 That's it! You can also use `#!require ... ` instead of `--`. But avoid space between the commentaries characters and the directive (!require).
 
@@ -55,10 +60,12 @@ That's it! You can also use `#!require ... ` instead of `--`. But avoid space be
 
 You can add/remove new paths in the initializers of Rails:
 
+```ruby
     Rails.configure do |config|
       config.rails_db_view[:views_path] += %w( /some/view/path )
       config.rails_db_view[:views_ext] = "*.dbview" #Using custom extensions to override default ".sql" extension.
     end
+```
 
 # Licensing
 
