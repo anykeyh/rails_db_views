@@ -16,7 +16,7 @@ Gem::Specification.new do |s|
   s.files = Dir["{app,config,db,lib}/**/*", "LICENSE", "Rakefile", "README.rdoc"]
   s.test_files = Dir["test/**/*"]
   s.require_paths = ["lib"]
-  s.license = ["MIT"]
+  s.licenses = ["MIT"]
 
   s.add_dependency "rails", "~> 4.0.1"
   s.add_dependency "rake-hooks"
