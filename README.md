@@ -1,4 +1,4 @@
-# rails-db-view
+# rails-db-views
 
 Provide tools to create and manage database view through your Rails projects.
 
@@ -24,9 +24,9 @@ gem 'rails_db_views'
 Then create your views into `db/views` directory (create the directory if needed).
 All your views are files with "sql" extensions, without the directive `CREATE VIEW xxx AS`.
 Just the SQL (like classic SQL request then!)
-rails-db-view will use the filename without extension as view name (so avoid special characters like "." or "-" into filename...).
+rails-db-views will use the filename without extension as view name (so avoid special characters like "." or "-" into filename...).
 
-Whenever you'll do `rake db:migrate` or `rake db:rollback`, prior to applying the migrations, rails-db-view will remove all referenced views. After all migrations are done, rails-db-view will reconstruct each views.
+Whenever you'll do `rake db:migrate` or `rake db:rollback`, prior to applying the migrations, rails-db-views will remove all referenced views. After all migrations are done, rails-db-views will reconstruct each views.
 
 # Advanced options
 
