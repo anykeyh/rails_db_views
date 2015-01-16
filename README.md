@@ -20,7 +20,7 @@ Quite simple. Add rails_db_view in your Gemfile:
     gem 'rails_db_view'
 
 Then create your views into `db/views` directory (create the directory if needed).
-All your views are files with "sql" extensions.
+All your views are files with "sql" extensions, without the directive "CREATE VIEW xxx AS". Just the SQL (like classic SQL request then!)
 rails-db-view will use the filename as view name (so avoid special characters like "." or "-"...).
 
 Whenever you'll do `rake db:migrate` or `rake db:rollback`, prior to applying the migrations, rails-db-view will remove all referenced views. After all migrations are done, rails-db-view will reconstruct each views.
