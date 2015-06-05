@@ -18,8 +18,8 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
   s.licenses = ["MIT"]
 
-  s.add_dependency "rails", "~> 4.0.1"
-  s.add_dependency "rake-hooks"
+  s.add_dependency "rails", ">= 4.0"
+  s.add_runtime_dependency "rake-hooks", "~> 1.2.3"
 
   s.add_development_dependency "sqlite3"
 end

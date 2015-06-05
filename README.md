@@ -66,6 +66,9 @@ Rails.configure do |config|
   config.rails_db_views[:views_ext] = "*.dbview" #Using custom extensions to override default ".sql" extension.
 end
 ```
+# Changelog
+
+0.3 - fix rails version to be sble to use with rails 4+ (?). I'm still confused with the dependencies management with gems.
 
 # Licensing
 
