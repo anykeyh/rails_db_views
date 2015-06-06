@@ -68,7 +68,7 @@ end
 ```
 # Changelog
 
-0.3 - fix rails version to be sble to use with rails 4+ (?). I'm still confused with the dependencies management with gems.
+0.3 - fix rails version to be able to use with rails >4.
 
 # Licensing
 
