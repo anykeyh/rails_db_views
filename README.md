@@ -25,7 +25,7 @@ The functions will be created and/or replaced before all pending migration.
 
 ### Deletion
 
-Moreover, you can force the deletion of a view or function using the new directive `remove`.
+Moreover, you can force the deletion of a view using the new directive `remove`.
 Getting bored about this *top_30_articles_in_belgium* view and want a *top_50_articles_in_belgium* instead?
 Just set `--!deleted` into the file which defined the old view, and that's it!
 The view will be removed and not created again!
@@ -42,9 +42,10 @@ I've made a refactoring into the gem, to make it more understandable and easy to
 
 Errors and error messages are more clear (one type per kind of error).
 
-## 0.3 - fix rails version to be able to use with rails >4.
+## 0.3
 
-First working commit :)
+First working commit
+I've fixed rails version to be able to use with rails >4.
 
 # How to use
 
