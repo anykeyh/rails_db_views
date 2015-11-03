@@ -373,3 +373,112 @@ PG::UndefinedTable: ERROR:  view "hello_world" does not exist
   [1m[36m (23.3ms)[0m  [1mCREATE VIEW required AS SELECT 1 as id[0m
   [1m[35m (5.5ms)[0m  CREATE VIEW hello_world AS  --!require required
 SELECT 'HelloWorld' WHERE ( SELECT id FROM required ) IN (1)
+  [1m[36m (12.3ms)[0m  [1mCREATE OR REPLACE FUNCTION add (x integer, y integer) RETURNS integer AS $$
+  BEGIN
+    RETURN x + y;
+  END;
+$$ LANGUAGE plpgsql;[0m
+  [1m[35m (10.6ms)[0m  DROP VIEW required
+PG::DependentObjectsStillExist: ERROR:  cannot drop view required because other objects depend on it
+DETAIL:  view hello_world depends on view required
+HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+: DROP VIEW required
+  [1m[36m (18.0ms)[0m  [1mDROP VIEW hello_world[0m
+  [1m[35mActiveRecord::SchemaMigration Load (0.2ms)[0m  SELECT "schema_migrations".* FROM "schema_migrations"
+  [1m[36m (0.2ms)[0m  [1mCREATE VIEW required AS SELECT 1 as id[0m
+PG::DuplicateTable: ERROR:  relation "required" already exists
+: CREATE VIEW required AS SELECT 1 as id
+  [1m[36m (2.5ms)[0m  [1mCREATE OR REPLACE FUNCTION add (x integer, y integer) RETURNS integer AS $$
+  BEGIN
+    RETURN x + y;
+  END;
+$$ LANGUAGE plpgsql;[0m
+  [1m[35m (1.0ms)[0m  DROP VIEW required
+  [1m[36m (0.4ms)[0m  [1mDROP VIEW hello_world[0m
+PG::UndefinedTable: ERROR:  view "hello_world" does not exist
+: DROP VIEW hello_world
+  [1m[35mActiveRecord::SchemaMigration Load (0.4ms)[0m  SELECT "schema_migrations".* FROM "schema_migrations"
+  [1m[36m (8.1ms)[0m  [1mCREATE VIEW required AS SELECT 1 as id[0m
+  [1m[35m (6.6ms)[0m  CREATE VIEW hello_world AS  --!require required
+SELECT 'HelloWorld' WHERE ( SELECT id FROM required ) IN (1)
+  [1m[36m (2.0ms)[0m  [1mCREATE OR REPLACE FUNCTION add (x integer, y integer) RETURNS integer AS $$
+  BEGIN
+    RETURN x + y;
+  END;
+$$ LANGUAGE plpgsql;[0m
+  [1m[35m (0.6ms)[0m  DROP VIEW required
+PG::DependentObjectsStillExist: ERROR:  cannot drop view required because other objects depend on it
+DETAIL:  view hello_world depends on view required
+HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+: DROP VIEW required
+  [1m[36m (0.9ms)[0m  [1mDROP VIEW hello_world[0m
+  [1m[35mActiveRecord::SchemaMigration Load (0.5ms)[0m  SELECT "schema_migrations".* FROM "schema_migrations"
+  [1m[36m (0.3ms)[0m  [1mCREATE VIEW required AS SELECT 1 as id[0m
+PG::DuplicateTable: ERROR:  relation "required" already exists
+: CREATE VIEW required AS SELECT 1 as id
+  [1m[36m (2.1ms)[0m  [1mCREATE OR REPLACE FUNCTION add (x integer, y integer) RETURNS integer AS $$
+  BEGIN
+    RETURN x + y;
+  END;
+$$ LANGUAGE plpgsql;[0m
+  [1m[35m (0.9ms)[0m  DROP VIEW required
+  [1m[36m (0.3ms)[0m  [1mDROP VIEW hello_world[0m
+PG::UndefinedTable: ERROR:  view "hello_world" does not exist
+: DROP VIEW hello_world
+  [1m[36m (2.0ms)[0m  [1mCREATE OR REPLACE FUNCTION add (x integer, y integer) RETURNS integer AS $$
+  BEGIN
+    RETURN x + y;
+  END;
+$$ LANGUAGE plpgsql;[0m
+  [1m[35m (0.3ms)[0m  DROP VIEW required
+PG::UndefinedTable: ERROR:  view "required" does not exist
+: DROP VIEW required
+  [1m[36m (2.1ms)[0m  [1mCREATE OR REPLACE FUNCTION add (x integer, y integer) RETURNS integer AS $$
+  BEGIN
+    RETURN x + y;
+  END;
+$$ LANGUAGE plpgsql;[0m
+  [1m[35m (0.3ms)[0m  DROP VIEW required
+PG::UndefinedTable: ERROR:  view "required" does not exist
+: DROP VIEW required
+  [1m[36m (2.0ms)[0m  [1mCREATE OR REPLACE FUNCTION add (x integer, y integer) RETURNS integer AS $$
+  BEGIN
+    RETURN x + y;
+  END;
+$$ LANGUAGE plpgsql;[0m
+  [1m[35m (0.3ms)[0m  DROP VIEW required
+PG::UndefinedTable: ERROR:  view "required" does not exist
+: DROP VIEW required
+  [1m[36m (0.2ms)[0m  [1mDROP VIEW hello_world[0m
+PG::UndefinedTable: ERROR:  view "hello_world" does not exist
+: DROP VIEW hello_world
+  [1m[35mActiveRecord::SchemaMigration Load (0.3ms)[0m  SELECT "schema_migrations".* FROM "schema_migrations"
+  [1m[36m (6.7ms)[0m  [1mCREATE VIEW required AS SELECT 1 as id[0m
+  [1m[35m (6.6ms)[0m  CREATE VIEW hello_world AS --!require required
+SELECT 'HelloWorld' WHERE ( SELECT id FROM required ) IN (1)
+  [1m[36m (2.3ms)[0m  [1mCREATE OR REPLACE FUNCTION add (x integer, y integer) RETURNS integer AS $$
+  BEGIN
+    RETURN x + y;
+  END;
+$$ LANGUAGE plpgsql;[0m
+  [1m[35m (0.7ms)[0m  DROP VIEW required
+PG::DependentObjectsStillExist: ERROR:  cannot drop view required because other objects depend on it
+DETAIL:  view hello_world depends on view required
+HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+: DROP VIEW required
+  [1m[36m (3.0ms)[0m  [1mCREATE OR REPLACE FUNCTION add (x integer, y integer) RETURNS integer AS $$
+  BEGIN
+    RETURN x + y;
+  END;
+$$ LANGUAGE plpgsql;[0m
+  [1m[36m (1.4ms)[0m  [1mCREATE OR REPLACE FUNCTION add (x integer, y integer) RETURNS integer AS $$
+  BEGIN
+    RETURN x + y;
+  END;
+$$ LANGUAGE plpgsql;[0m
+  [1m[35m (1.2ms)[0m  DROP VIEW hello_world
+  [1m[36m (0.6ms)[0m  [1mDROP VIEW required[0m
+  [1m[35mActiveRecord::SchemaMigration Load (0.3ms)[0m  SELECT "schema_migrations".* FROM "schema_migrations"
+  [1m[36m (12.4ms)[0m  [1mCREATE VIEW required AS SELECT 1 as id[0m
+  [1m[35m (12.6ms)[0m  CREATE VIEW hello_world AS --!require required
+SELECT 'HelloWorld' WHERE ( SELECT id FROM required ) IN (1)

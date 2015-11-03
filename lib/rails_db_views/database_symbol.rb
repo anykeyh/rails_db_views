@@ -2,7 +2,7 @@ class RailsDbViews::DatabaseSymbol
   class CircularReferenceError < RuntimeError; end
   class SymbolNotFound < RuntimeError; end
 
-  attr_accessor :path, :sql_content, :status, :requires, :marked_as_deleted, :name
+  attr_accessor :path, :sql_content, :status, :required, :inverse_of_required, :marked_as_deleted, :name
   alias :marked_as_deleted? :marked_as_deleted
 
   module Status
@@ -16,11 +16,20 @@ class RailsDbViews::DatabaseSymbol
     @name = File.basename(file_path, ".*")
 
     @status = :none
-    @requires = []
+    @required = []
     @marked_as_deleted = false
     @sql_content = File.read(@path)
+    @inverse_of_required = []
 
     load_directives
+  end
+
+  def process_inverse_of_required!
+    @required.each do |name|
+      required = RailsDbViews::Factory.get(self.class, name)
+      not_found_error if required.nil?
+      required.inverse_of_required << self.name
+    end
   end
 
   def mark_as_delete!
@@ -46,7 +55,7 @@ class RailsDbViews::DatabaseSymbol
 
     self.status = Status::IN_PROGRESS
 
-    requires.each do |symbol_name|
+    required.each do |symbol_name|
       symbol = RailsDbViews::Factory.get(self.class, symbol_name)
       not_found_error(symbol_name) if symbol.nil?
       symbol.create!
@@ -64,7 +73,8 @@ class RailsDbViews::DatabaseSymbol
 
     self.status = Status::IN_PROGRESS
 
-    requires.each do |symbol_name|
+    # We start by the required one to delete first.
+    inverse_of_required.each do |symbol_name|
       symbol = RailsDbViews::Factory.get(self.class, symbol_name)
       not_found_error(symbol_name) if symbol.nil?
       symbol.drop!
@@ -72,8 +82,8 @@ class RailsDbViews::DatabaseSymbol
 
     begin
       ActiveRecord::Base.connection.execute(drop_sql)
-    rescue ActiveRecord::ActiveRecordError => e #Probably because the symbol doesn't exists yet.
-      handle_error_on_drop
+    #rescue ActiveRecord::ActiveRecordError => e #Probably because the symbol doesn't exists yet.
+    #  handle_error_on_drop
     end
 
     self.status = Status::LOADED
@@ -115,7 +125,7 @@ protected
     directives.each do |d|
       case d
       when /^require /
-        self.requires += d.split(/[ \t]+/)[1..-1]
+        self.required += d.split(/[ \t]+/)[1..-1]
       when /^delete(d?) /
         self.mark_as_delete!
       else

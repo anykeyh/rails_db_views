@@ -19,6 +19,8 @@ class RailsDbViews::Factory
 
         @symbols[symbol_class.to_s][symbol.name] = symbol
       end
+
+      @symbols.values.map(&:values).flatten.each(&:process_inverse_of_required!)
     end
 
     def drop(symbol_class)
