@@ -2,7 +2,7 @@ class RailsDbViews::DatabaseSymbol
   class CircularReferenceError < RuntimeError; end
   class SymbolNotFound < RuntimeError; end
 
-  attr_accessor :path, :sql_content, :status, :requires, :marked_as_deleted
+  attr_accessor :path, :sql_content, :status, :requires, :marked_as_deleted, :name
   alias :marked_as_deleted? :marked_as_deleted
 
   module Status
@@ -13,11 +13,12 @@ class RailsDbViews::DatabaseSymbol
 
   def initialize file_path
     @path = file_path
-    @name = File.basename(file_path)
+    @name = File.basename(file_path, ".*")
 
     @status = :none
     @requires = []
     @marked_as_deleted = false
+    @sql_content = File.read(@path)
 
     load_directives
   end
@@ -46,18 +47,14 @@ class RailsDbViews::DatabaseSymbol
     self.status = Status::IN_PROGRESS
 
     requires.each do |symbol_name|
-      symbol = RailsDbViews::DbViewsCreator.get(self.class, symbol_name)
-      error_not_found(symbol_name) if symbol.nil?
+      symbol = RailsDbViews::Factory.get(self.class, symbol_name)
+      not_found_error(symbol_name) if symbol.nil?
       symbol.create!
     end
 
-    sql = "CREATE VIEW #{name} AS #{sql_content}"
-    ActiveRecord::Base.connection.execute(sql)
-    puts "CREATE VIEW #{name} AS... OK"
+    ActiveRecord::Base.connection.execute(create_sql)
 
     self.status = Status::LOADED
-
-    reset_views_status!
   end
 
   def drop!
@@ -68,28 +65,31 @@ class RailsDbViews::DatabaseSymbol
     self.status = Status::IN_PROGRESS
 
     requires.each do |symbol_name|
-      symbol = RailsDbViews::DbViewsCreator.get(self.class, symbol_name)
-      error_not_found(view_name) if symbol.nil?
+      symbol = RailsDbViews::Factory.get(self.class, symbol_name)
+      not_found_error(symbol_name) if symbol.nil?
       symbol.drop!
     end
 
     begin
-      ActiveRecord::Base.connection.execute(to_sql)
-      puts "DROP VIEW #{name}... OK"
-    rescue
-      puts "WARNING: DROP VIEW #{name}... ERROR"
+      ActiveRecord::Base.connection.execute(drop_sql)
+    rescue ActiveRecord::ActiveRecordError => e #Probably because the symbol doesn't exists yet.
+      handle_error_on_drop
     end
 
     self.status = Status::LOADED
   end
 
   # Theses methods should be implemented in children objects.
-  def to_sql
-    raise NotImplementedError
+  def drop_sql
+    raise NotImplementedError, "DatabaseSymbol should not be instanciated"
+  end
+
+  def create_sql
+    raise NotImplementedError, "DatabaseSymbol should not be instanciated"
   end
 
   def handle_error_on_drop
-    raise NotImplementedError
+    raise NotImplementedError, "DatabaseSymbol should not be instanciated"
   end
 
 protected
@@ -102,11 +102,11 @@ protected
   end
 
   def not_found_error(symbol_name)
-    raise SymbolNotFound, "D'oh! #{self.class.name.capitalize} #{symbol_name} referenced in file #{path} cannot be found..."
+    raise SymbolNotFound, "#{self.class.name} `#{symbol_name}` referenced in file #{path} cannot be found..."
   end
 
   def load_directives
-    content_lines = content.split("\n")
+    content_lines = sql_content.split("\n")
 
     directives = content_lines.map(&:strip).select{ |x| x =~ DIRECTIVE_START }.map{ |x|
         x.gsub(DIRECTIVE_START, "")
@@ -115,7 +115,7 @@ protected
     directives.each do |d|
       case d
       when /^require /
-        self.requires += d.split(/ +/)[1..-1]
+        self.requires += d.split(/[ \t]+/)[1..-1]
       when /^delete(d?) /
         self.mark_as_delete!
       else

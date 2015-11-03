@@ -166,3 +166,167 @@ SQLite3::SQLException: table required already exists: CREATE VIEW required AS SE
   [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
   [1m[35m (0.9ms)[0m  CREATE VIEW required AS SELECT 1 as id
   [1m[36m (1.1ms)[0m  [1mCREATE VIEW hello_world AS SELECT 'HelloWorld' WHERE ( SELECT id FROM required ) IN (1)[0m
+  [1m[36m (0.2ms)[0m  [1mCREATE OR REPLACE FUNCTION (x integer, y integer) RETURNS integer AS $$
+  BEGIN
+    RETURN x + y;
+  END;
+$$ LANGUAGE plpgsql; add.sql[0m
+SQLite3::SQLException: near "OR": syntax error: CREATE OR REPLACE FUNCTION (x integer, y integer) RETURNS integer AS $$
+  BEGIN
+    RETURN x + y;
+  END;
+$$ LANGUAGE plpgsql; add.sql
+  [1m[36m (0.2ms)[0m  [1mDROP FUNCTION add.sql[0m
+SQLite3::SQLException: near "FUNCTION": syntax error: DROP FUNCTION add.sql
+  [1m[36m (0.1ms)[0m  [1mDROP FUNCTION add.sql[0m
+SQLite3::SQLException: near "FUNCTION": syntax error: DROP FUNCTION add.sql
+  [1m[36m (0.2ms)[0m  [1mDROP FUNCTION add.sql[0m
+SQLite3::SQLException: near "FUNCTION": syntax error: DROP FUNCTION add.sql
+  [1m[36m (0.1ms)[0m  [1mDROP FUNCTION add.sql[0m
+SQLite3::SQLException: near "FUNCTION": syntax error: DROP FUNCTION add.sql
+  [1m[36m (0.2ms)[0m  [1mDROP FUNCTION add.sql[0m
+SQLite3::SQLException: near "FUNCTION": syntax error: DROP FUNCTION add.sql
+  [1m[36m (0.2ms)[0m  [1mDROP FUNCTION add.sql[0m
+SQLite3::SQLException: near "FUNCTION": syntax error: DROP FUNCTION add.sql
+  [1m[36m (0.2ms)[0m  [1mDROP FUNCTION add.sql[0m
+SQLite3::SQLException: near "FUNCTION": syntax error: DROP FUNCTION add.sql
+  [1m[36m (0.2ms)[0m  [1mDROP FUNCTION add.sql[0m
+SQLite3::SQLException: near "FUNCTION": syntax error: DROP FUNCTION add.sql
+  [1m[36m (0.2ms)[0m  [1mDROP FUNCTION add.sql[0m
+SQLite3::SQLException: near "FUNCTION": syntax error: DROP FUNCTION add.sql
+  [1m[36m (0.2ms)[0m  [1mDROP FUNCTION add.sql[0m
+SQLite3::SQLException: near "FUNCTION": syntax error: DROP FUNCTION add.sql
+  [1m[36m (0.1ms)[0m  [1mDROP FUNCTION add.sql[0m
+SQLite3::SQLException: near "FUNCTION": syntax error: DROP FUNCTION add.sql
+  [1m[36m (0.2ms)[0m  [1mDROP FUNCTION add.sql[0m
+SQLite3::SQLException: near "FUNCTION": syntax error: DROP FUNCTION add.sql
+  [1m[36m (0.2ms)[0m  [1mDROP FUNCTION add[0m
+SQLite3::SQLException: near "FUNCTION": syntax error: DROP FUNCTION add
+  [1m[35m (0.2ms)[0m  CREATE VIEW required
+SQLite3::SQLException: near "required": syntax error: CREATE VIEW required
+  [1m[36m (0.1ms)[0m  [1mCREATE VIEW hello_world[0m
+SQLite3::SQLException: near "hello_world": syntax error: CREATE VIEW hello_world
+  [1m[35m (1.0ms)[0m  CREATE TABLE "schema_migrations" ("version" varchar NOT NULL) 
+  [1m[36m (0.1ms)[0m  [1mselect sqlite_version(*)[0m
+  [1m[35m (0.8ms)[0m  CREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version")
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.1ms)[0m  CREATE VIEW SELECT 1 as id
+SQLite3::SQLException: near "SELECT": syntax error: CREATE VIEW SELECT 1 as id
+  [1m[36m (0.2ms)[0m  [1mDROP FUNCTION add[0m
+SQLite3::SQLException: near "FUNCTION": syntax error: DROP FUNCTION add
+  [1m[35m (0.2ms)[0m  CREATE VIEW required
+SQLite3::SQLException: near "required": syntax error: CREATE VIEW required
+  [1m[36m (0.2ms)[0m  [1mCREATE VIEW hello_world[0m
+SQLite3::SQLException: near "hello_world": syntax error: CREATE VIEW hello_world
+  [1m[35m (1.2ms)[0m  CREATE TABLE "schema_migrations" ("version" varchar NOT NULL) 
+  [1m[36m (0.1ms)[0m  [1mselect sqlite_version(*)[0m
+  [1m[35m (0.9ms)[0m  CREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version")
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.1ms)[0m  CREATE VIEW SELECT 1 as id
+SQLite3::SQLException: near "SELECT": syntax error: CREATE VIEW SELECT 1 as id
+  [1m[36m (0.2ms)[0m  [1mDROP FUNCTION add[0m
+SQLite3::SQLException: near "FUNCTION": syntax error: DROP FUNCTION add
+  [1m[35m (0.1ms)[0m  CREATE VIEW required
+SQLite3::SQLException: near "required": syntax error: CREATE VIEW required
+  [1m[36m (0.1ms)[0m  [1mCREATE VIEW hello_world[0m
+SQLite3::SQLException: near "hello_world": syntax error: CREATE VIEW hello_world
+  [1m[35m (1.9ms)[0m  CREATE TABLE "schema_migrations" ("version" varchar NOT NULL) 
+  [1m[36m (0.1ms)[0m  [1mselect sqlite_version(*)[0m
+  [1m[35m (1.2ms)[0m  CREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version")
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (1.0ms)[0m  CREATE VIEW required AS SELECT 1 as id
+  [1m[36m (0.2ms)[0m  [1mDROP FUNCTION add[0m
+SQLite3::SQLException: near "FUNCTION": syntax error: DROP FUNCTION add
+  [1m[35m (0.1ms)[0m  CREATE VIEW required
+SQLite3::SQLException: near "required": syntax error: CREATE VIEW required
+  [1m[36m (0.1ms)[0m  [1mCREATE VIEW hello_world[0m
+SQLite3::SQLException: near "hello_world": syntax error: CREATE VIEW hello_world
+  [1m[35m (1.4ms)[0m  CREATE TABLE "schema_migrations" ("version" varchar NOT NULL) 
+  [1m[36m (0.1ms)[0m  [1mselect sqlite_version(*)[0m
+  [1m[35m (0.8ms)[0m  CREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version")
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.7ms)[0m  CREATE VIEW required AS SELECT 1 as id
+  [1m[36m (0.9ms)[0m  [1mCREATE VIEW hello_world AS  --!require required
+SELECT 'HelloWorld' WHERE ( SELECT id FROM required ) IN (1)[0m
+  [1m[36m (0.2ms)[0m  [1mDROP FUNCTION add[0m
+SQLite3::SQLException: near "FUNCTION": syntax error: DROP FUNCTION add
+  [1m[35m (0.1ms)[0m  CREATE VIEW required
+SQLite3::SQLException: near "required": syntax error: CREATE VIEW required
+  [1m[36m (0.1ms)[0m  [1mCREATE VIEW hello_world[0m
+SQLite3::SQLException: near "hello_world": syntax error: CREATE VIEW hello_world
+  [1m[35m (1.4ms)[0m  CREATE TABLE "schema_migrations" ("version" varchar NOT NULL) 
+  [1m[36m (0.1ms)[0m  [1mselect sqlite_version(*)[0m
+  [1m[35m (0.9ms)[0m  CREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version")
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.8ms)[0m  CREATE VIEW required AS SELECT 1 as id
+  [1m[36m (0.9ms)[0m  [1mCREATE VIEW hello_world AS  --!require required
+SELECT 'HelloWorld' WHERE ( SELECT id FROM required ) IN (1)[0m
+  [1m[36m (0.2ms)[0m  [1mDROP FUNCTION add[0m
+SQLite3::SQLException: near "FUNCTION": syntax error: DROP FUNCTION add
+  [1m[35m (0.1ms)[0m  CREATE VIEW required
+SQLite3::SQLException: near "required": syntax error: CREATE VIEW required
+  [1m[36m (0.1ms)[0m  [1mCREATE VIEW hello_world[0m
+SQLite3::SQLException: near "hello_world": syntax error: CREATE VIEW hello_world
+  [1m[35m (1.0ms)[0m  CREATE TABLE "schema_migrations" ("version" varchar NOT NULL) 
+  [1m[36m (0.1ms)[0m  [1mselect sqlite_version(*)[0m
+  [1m[35m (1.0ms)[0m  CREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version")
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.9ms)[0m  CREATE VIEW required AS SELECT 1 as id
+  [1m[36m (0.8ms)[0m  [1mCREATE VIEW hello_world AS  --!require required
+SELECT 'HelloWorld' WHERE ( SELECT id FROM required ) IN (1)[0m
+  [1m[36m (0.2ms)[0m  [1mDROP FUNCTION add[0m
+SQLite3::SQLException: near "FUNCTION": syntax error: DROP FUNCTION add
+  [1m[35m (0.1ms)[0m  CREATE VIEW required
+SQLite3::SQLException: near "required": syntax error: CREATE VIEW required
+  [1m[36m (0.1ms)[0m  [1mCREATE VIEW hello_world[0m
+SQLite3::SQLException: near "hello_world": syntax error: CREATE VIEW hello_world
+  [1m[35m (1.2ms)[0m  CREATE TABLE "schema_migrations" ("version" varchar NOT NULL) 
+  [1m[36m (0.1ms)[0m  [1mselect sqlite_version(*)[0m
+  [1m[35m (0.9ms)[0m  CREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version")
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.8ms)[0m  CREATE VIEW required AS SELECT 1 as id
+  [1m[36m (1.1ms)[0m  [1mCREATE VIEW hello_world AS  --!require required
+SELECT 'HelloWorld' WHERE ( SELECT id FROM required ) IN (1)[0m
+  [1m[36m (0.2ms)[0m  [1mCREATE VIEW required[0m
+SQLite3::SQLException: near "required": syntax error: CREATE VIEW required
+  [1m[35m (0.1ms)[0m  CREATE VIEW hello_world
+SQLite3::SQLException: near "hello_world": syntax error: CREATE VIEW hello_world
+  [1m[36m (1.1ms)[0m  [1mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL) [0m
+  [1m[35m (0.1ms)[0m  select sqlite_version(*)
+  [1m[36m (0.9ms)[0m  [1mCREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version")[0m
+  [1m[35mActiveRecord::SchemaMigration Load (0.1ms)[0m  SELECT "schema_migrations".* FROM "schema_migrations"
+  [1m[36m (3.9ms)[0m  [1mCREATE VIEW required AS SELECT 1 as id[0m
+  [1m[35m (0.9ms)[0m  CREATE VIEW hello_world AS  --!require required
+SELECT 'HelloWorld' WHERE ( SELECT id FROM required ) IN (1)
+  [1m[36m (0.2ms)[0m  [1mDROP FUNCTION add[0m
+SQLite3::SQLException: near "FUNCTION": syntax error: DROP FUNCTION add
+  [1m[36m (0.2ms)[0m  [1mCREATE VIEW required[0m
+SQLite3::SQLException: near "required": syntax error: CREATE VIEW required
+  [1m[36m (0.4ms)[0m  [1mDROP VIEW required[0m
+SQLite3::SQLException: no such view: required: DROP VIEW required
+  [1m[36m (0.3ms)[0m  [1mDROP VIEW required[0m
+SQLite3::SQLException: no such view: required: DROP VIEW required
+  [1m[36m (0.3ms)[0m  [1mDROP VIEW required[0m
+SQLite3::SQLException: no such view: required: DROP VIEW required
+  [1m[36m (0.3ms)[0m  [1mDROP VIEW required[0m
+SQLite3::SQLException: no such view: required: DROP VIEW required
+  [1m[35m (0.1ms)[0m  DROP VIEW hello_world
+SQLite3::SQLException: no such view: hello_world: DROP VIEW hello_world
+  [1m[36m (1.2ms)[0m  [1mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL) [0m
+  [1m[35m (0.1ms)[0m  select sqlite_version(*)
+  [1m[36m (0.8ms)[0m  [1mCREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version")[0m
+  [1m[35mActiveRecord::SchemaMigration Load (0.1ms)[0m  SELECT "schema_migrations".* FROM "schema_migrations"
+  [1m[36m (0.7ms)[0m  [1mCREATE VIEW required AS SELECT 1 as id[0m
+  [1m[35m (0.7ms)[0m  CREATE VIEW hello_world AS  --!require required
+SELECT 'HelloWorld' WHERE ( SELECT id FROM required ) IN (1)
+  [1m[36m (0.3ms)[0m  [1mDROP VIEW required[0m
+SQLite3::SQLException: no such view: required: DROP VIEW required
+  [1m[35m (0.2ms)[0m  DROP VIEW hello_world
+SQLite3::SQLException: no such view: hello_world: DROP VIEW hello_world
+  [1m[36m (1.0ms)[0m  [1mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL) [0m
+  [1m[35m (0.1ms)[0m  select sqlite_version(*)
+  [1m[36m (0.8ms)[0m  [1mCREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version")[0m
+  [1m[35mActiveRecord::SchemaMigration Load (0.1ms)[0m  SELECT "schema_migrations".* FROM "schema_migrations"
+  [1m[36m (4.8ms)[0m  [1mCREATE VIEW required AS SELECT 1 as id[0m
+  [1m[35m (1.3ms)[0m  CREATE VIEW hello_world AS  --!require required
+SELECT 'HelloWorld' WHERE ( SELECT id FROM required ) IN (1)

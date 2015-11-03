@@ -1,11 +1,11 @@
-class Railtie < Rails::Railtie
+require 'rails_db_views/configuration'
+
+class RailsDbViews::Railtie < Rails::Railtie
   railtie_name :rails_db_views
 
   config.rails_db_views = RailsDbViews::Configuration.new
 
   initializer "rails_db_views.initialize" do |app|
-    app.config.rails_db_views[:views_path] = %w( db/views )
-    app.config.rails_db_views[:views_ext] = "*.sql"
   end
 
   rake_tasks do

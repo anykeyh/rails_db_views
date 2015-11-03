@@ -30,12 +30,17 @@ Getting bored about this *top_30_articles_in_belgium* view and want a *top_50_ar
 Just set `--!deleted` into the file which defined the old view, and that's it!
 The view will be removed and not created again!
 
+Be aware this is not working with function yet.
+
+## Configuration
+
+The configuration change a little bit. If you update, please check the instructions below.
+
 ## Refactoring
 
 I've made a refactoring into the gem, to make it more understandable and easy to fork. Also two views with the same name in differents paths will trigger an `AmbigousNameError`.
 
 Errors and error messages are more clear (one type per kind of error).
-
 
 ## 0.3 - fix rails version to be able to use with rails >4.
 
@@ -48,12 +53,41 @@ Quite simple. Add rails_db_view in your Gemfile:
 gem 'rails_db_views'
 ```
 
-Then create your views into `db/views` directory (create the directory if needed).
+## Views
+You create your views into `db/views` directory (create the directory if needed).
 All your views are files with "sql" extensions, without the directive `CREATE VIEW xxx AS`.
 Just the SQL (like classic SQL request then!)
 rails_db_views will use the filename without extension as view name (so avoid special characters like "." or "-" into filename...).
 
 Whenever you'll do `rake db:migrate` or `rake db:rollback`, prior to applying the migrations, rails_db_views will remove all referenced views. After all migrations are done, rails_db_views will reconstruct each views.
+
+## Functions
+
+You create your function without the directive `CREATE FUNCTION xxx`
+
+Here's a simple example of the function `add`:
+```SQL
+(x integer, y integer) RETURNS integer AS $$
+  BEGIN
+    RETURN x + y;
+  END;
+$$ LANGUAGE plpgsql;
+```
+
+_*IMPORTANT NOTICE FOR POSTGRES USERS:*_
+
+If you're using function to build indexes in postgresql, please consider to reconstruct the index once you've changed your function:
+```SQL
+reindex index $index_name
+```
+postgres is smart enough to don't replace the function if it's exactly the same function than before, so no need to rebuild your indexes at every migrations! :)
+See more informations [here](http://stackoverflow.com/questions/17601719/replace-function-used-in-index)
+
+# Database compatibility
+
+I've tested the gem only on postgres and sqlite. Use it on mysql or else at your *own risks*.
+
+Obviously, beware function definition doesn't work on sqlite, because the engine doesn't allow it. Hey, it's *lite* ok? :-)
 
 # Advanced options
 
@@ -81,9 +115,9 @@ In `db/views/view_b.sql`:
 SELECT id FROM view_a
 ```
 
-That's it! You can also use `#!require ... ` instead of `--`. But avoid space between the commentaries characters and the directive (!require).
+~~That's it! You can also use `#!require ... ` instead of `--`. But avoid space between the commentaries characters and the directive (!require).~~ **Now you can put any space you want!**
 
-For the functions, they will be installed before the views, so you can use them in your views.
+For the functions, they will be installed before the views, so you can use them in your views without problems!
 
 ## Configurate paths & extensions
 
@@ -91,8 +125,11 @@ You can add/remove new paths in the initializers of Rails:
 
 ```ruby
 Rails.configure do |config|
-  config.rails_db_views[:views_path] += %w( /some/view/path )
-  config.rails_db_views[:views_ext] = "*.dbview" #Using custom extensions to override default ".sql" extension.
+  config.rails_db_views.view_path += %w( /some/view/path )
+  config.rails_db_views.view_extension = "*.sql"
+
+  config.rails_db_views.function_path += %w( /some/function/path )
+  config.rails_db_views.function_extension = "*.sql"
 end
 ```
 

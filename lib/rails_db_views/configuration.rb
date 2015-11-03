@@ -1,14 +1,16 @@
-class RailsDbView::Configuration
-
-  attr_accessor :view_paths, :view_extension
-  attr_accessor :function_paths, :function_extension
+class RailsDbViews::Configuration
+  attr_accessor :views_paths, :views_extension
+  attr_accessor :functions_paths, :functions_extension
 
   def initialize
-    @view_paths = %w( db/views )
-    @view_extension = "*.sql"
+    @views_paths = %w(db/views)
+    @views_extension = "*.sql"
 
-    @function_paths = %w(db/functions)
-    @function_extension = "*.sql"
+    @functions_paths = %w(db/functions)
+    @functions_extension = "*.sql"
   end
 
+  def [] *args
+    raise "rails_db_view has changed! Please use the methods views_paths/views_extension instead of hash notation"
+  end
 end
