@@ -22,4 +22,5 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency "rake-hooks", "~> 1.2.3"
 
   s.add_development_dependency "sqlite3"
+  s.add_development_dependency "pg"
 end
