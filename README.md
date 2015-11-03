@@ -127,11 +127,11 @@ You can add/remove new paths in the initializers of Rails:
 
 ```ruby
 Rails.configure do |config|
-  config.rails_db_views.view_path += %w( /some/view/path )
-  config.rails_db_views.view_extension = "*.sql"
+  config.rails_db_views.views_path += %w( /some/view/path )
+  config.rails_db_views.views_extension = "*.sql"
 
-  config.rails_db_views.function_path += %w( /some/function/path )
-  config.rails_db_views.function_extension = "*.sql"
+  config.rails_db_views.functions_path += %w( /some/function/path )
+  config.rails_db_views.functions_extension = "*.sql"
 end
 ```
 
