@@ -11,15 +11,15 @@ Gem::Specification.new do |s|
   s.email       = ["anykeyh@gmail.com"]
   s.homepage    = "https://github.com/anykeyh/rails_db_views"
   s.summary     = "Provide tools to create and manage database view through Rails project."
-  s.description = ""
+  s.description = "Provide tools to create and manage database view through Rails project."
 
   s.files = Dir["{app,config,db,lib}/**/*", "LICENSE", "Rakefile", "README.rdoc"]
   s.test_files = Dir["test/**/*"]
   s.require_paths = ["lib"]
   s.licenses = ["MIT"]
 
-  s.add_dependency "rails", ">= 4.0"
-  s.add_runtime_dependency "rake-hooks", "~> 1.2.3"
+  s.add_dependency "rails", "~> 4", ">= 4.0"
+  s.add_runtime_dependency "rake-hooks", '~> 1.2', '>= 1.2.3'
 
   s.add_development_dependency "sqlite3"
   s.add_development_dependency "pg"

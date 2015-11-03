@@ -17,13 +17,13 @@ Finally, whenever you migrate and remove a field from a table used by a view, po
 
 ## 0.4 - Finally `rails_db_view` comes with new features!
 
-## Functions
+### Functions
 
 You can now create functions, just putting your `.sql` files into
 the `db/functions` directory.
 The functions will be created and/or replaced before all pending migration.
 
-## Deletion
+### Deletion
 
 Moreover, you can force the deletion of a view or function using the new directive `remove`.
 Getting bored about this *top_30_articles_in_belgium* view and want a *top_50_articles_in_belgium* instead?
@@ -32,11 +32,11 @@ The view will be removed and not created again!
 
 Be aware this is not working with function yet.
 
-## Configuration
+### Configuration
 
 The configuration change a little bit. If you update, please check the instructions below.
 
-## Refactoring
+### Refactoring
 
 I've made a refactoring into the gem, to make it more understandable and easy to fork. Also two views with the same name in differents paths will trigger an `AmbigousNameError`.
 
@@ -44,6 +44,7 @@ Errors and error messages are more clear (one type per kind of error).
 
 ## 0.3 - fix rails version to be able to use with rails >4.
 
+First working commit :)
 
 # How to use
 
