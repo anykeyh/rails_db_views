@@ -1,7 +1,7 @@
 class Railtie < Rails::Railtie
   railtie_name :rails_db_views
 
-  config.rails_db_views = ActiveSupport::OrderedHash.new
+  config.rails_db_views = RailsDbViews::Configuration.new
 
   initializer "rails_db_views.initialize" do |app|
     app.config.rails_db_views[:views_path] = %w( db/views )

@@ -13,6 +13,33 @@ Also, rollback/migrate a view is a non-sense, since there's no data integrity to
 
 Finally, whenever you migrate and remove a field from a table used by a view, postgresql will throw an error, so removing views before applying migration is not an option.
 
+# Changelog
+
+## 0.4 - Finally `rails_db_view` comes with new features!
+
+## Functions
+
+You can now create functions, just putting your `.sql` files into
+the `db/functions` directory.
+The functions will be created and/or replaced before all pending migration.
+
+## Deletion
+
+Moreover, you can force the deletion of a view or function using the new directive `remove`.
+Getting bored about this *top_30_articles_in_belgium* view and want a *top_50_articles_in_belgium* instead?
+Just set `--!deleted` into the file which defined the old view, and that's it!
+The view will be removed and not created again!
+
+## Refactoring
+
+I've made a refactoring into the gem, to make it more understandable and easy to fork. Also two views with the same name in differents paths will trigger an `AmbigousNameError`.
+
+Errors and error messages are more clear (one type per kind of error).
+
+
+## 0.3 - fix rails version to be able to use with rails >4.
+
+
 # How to use
 
 Quite simple. Add rails_db_view in your Gemfile:
@@ -30,7 +57,7 @@ Whenever you'll do `rake db:migrate` or `rake db:rollback`, prior to applying th
 
 # Advanced options
 
-## Requirement and "Subviews"
+## Requirement of subviews and subfunctions.
 
 In some case we need to build view using another view as target:
 
@@ -56,6 +83,8 @@ SELECT id FROM view_a
 
 That's it! You can also use `#!require ... ` instead of `--`. But avoid space between the commentaries characters and the directive (!require).
 
+For the functions, they will be installed before the views, so you can use them in your views.
+
 ## Configurate paths & extensions
 
 You can add/remove new paths in the initializers of Rails:
@@ -66,9 +95,6 @@ Rails.configure do |config|
   config.rails_db_views[:views_ext] = "*.dbview" #Using custom extensions to override default ".sql" extension.
 end
 ```
-# Changelog
-
-0.3 - fix rails version to be able to use with rails >4.
 
 # Licensing
 

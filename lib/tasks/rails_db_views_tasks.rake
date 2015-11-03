@@ -1,29 +1,29 @@
 namespace :db do
 
-  desc "Generate all the database views of the current project"
+  desc "Create all the database views of the current project. Views are usually located in db/views"
   task :create_views => :environment do
-    creator = RailsDbViews::DbViewsCreator.new
-
     views_path, views_ext = Rails.configuration.rails_db_views[:views_path], Rails.configuration.rails_db_views[:views_ext]
 
+    RailsDbViews::Factory.clear!
+
     views_path.each do |path|
-      creator.register_files Dir[File.join(path, views_ext)].map{|x| File.expand_path(x)}
+      RailsDbViews::Factory.register_files RailsDbViews::View, Dir[File.join(path, views_ext)].map{|x| File.expand_path(x)}
     end
 
-    creator.create_views
+    RailsDbViews::Factory.create RailsDbViews::View
   end
 
   desc "Drop all the database views of the current project"
   task :drop_views => :environment do
-    creator = RailsDbViews::DbViewsCreator.new
-
     views_path, views_ext = Rails.configuration.rails_db_views[:views_path], Rails.configuration.rails_db_views[:views_ext]
 
+    RailsDbViews::Factory.clear!
+
     views_path.each do |path|
-      creator.register_files Dir[File.join(path, views_ext)].map{|x| File.expand_path(x)}
+      RailsDbViews::Factory.register_files RailsDbViews::View, Dir[File.join(path, views_ext)].map{|x| File.expand_path(x)}
     end
 
-    creator.drop_views
+    creator.drop RailsDbViews::View
   end
 end
 
