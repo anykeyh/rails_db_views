@@ -1,7 +1,7 @@
 class RailsDbViews::View < RailsDbViews::DatabaseSymbol
   def create_sql
     puts "CREATE VIEW #{name}..."
-    "CREATE VIEW #{name} AS #{sql_content}"
+    "CREATE VIEW #{name} AS #{uncommented_sql_content}"
   end
 
   def drop_sql

@@ -1,0 +1,875 @@
+  [1m[36m (0.3ms)[0m  [1mDROP VIEW messages[0m
+SQLite3::SQLException: no such view: messages: DROP VIEW messages
+  [1m[36m (0.3ms)[0m  [1mDROP VIEW messages[0m
+SQLite3::SQLException: no such view: messages: DROP VIEW messages
+  [1m[35m (0.9ms)[0m  CREATE TABLE "schema_migrations" ("version" varchar NOT NULL) 
+  [1m[36m (0.3ms)[0m  [1mselect sqlite_version(*)[0m
+  [1m[35m (0.8ms)[0m  CREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version")
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Migrating to CreateTestTables (20160208084226)
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36m (0.4ms)[0m  [1mCREATE TABLE "users" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35m (0.2ms)[0m  CREATE  INDEX "index_users_on_name" ON "users" ("name")
+  [1m[36m (0.4ms)[0m  [1mCREATE TABLE "user_messages" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "from_id" integer, "to_id" integer, "content" text, "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35m (0.5ms)[0m  CREATE  INDEX "index_user_messages_on_from_id" ON "user_messages" ("from_id")
+  [1m[36m (0.1ms)[0m  [1m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_user_messages_on_from_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_user_messages_on_from_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  CREATE  INDEX "index_user_messages_on_to_id" ON "user_messages" ("to_id")
+  [1m[36mSQL (0.1ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20160208084226"]]
+  [1m[35m (0.6ms)[0m  commit transaction
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.1ms)[0m              SELECT sql
+            FROM sqlite_master
+            WHERE name='index_user_messages_on_to_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_user_messages_on_to_id' AND type='index'
+
+  [1m[36m (0.1ms)[0m  [1m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_user_messages_on_from_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_user_messages_on_from_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m              SELECT sql
+            FROM sqlite_master
+            WHERE name='index_users_on_name' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_users_on_name' AND type='index'
+
+  [1m[36m (0.1ms)[0m  [1mCREATE VIEW messages AS -- Sample virtual model to test the gem.
+(
+  SELECT u2.name as receiver_name, u2.id as receiver_id,
+    u1.name as sender_name, u1.id as sender_id,
+    um.content, um.updated_at, um.created_at
+  FROM users u
+  INNER JOIN users_messages um ON ( u.id = users_messages.from_id )
+  INNER JOIN users u2 ON (u2.id = users_messages.to_id)
+)
+UNION
+(
+  SELECT u.name as receiver_name, u.id as receiver_id,
+    u2.name as sender_name, u2.id as sender_id,
+    um.content, um.updated_at, um.created_at
+  FROM users u
+  INNER JOIN users_messages um ON ( u.id = users_messages.to_id )
+  INNER JOIN users u2 ON ( u2.id = users_messages.from_id )
+)
+ORDER BY created_at ASC[0m
+SQLite3::SQLException: near "(": syntax error: CREATE VIEW messages AS -- Sample virtual model to test the gem.
+(
+  SELECT u2.name as receiver_name, u2.id as receiver_id,
+    u1.name as sender_name, u1.id as sender_id,
+    um.content, um.updated_at, um.created_at
+  FROM users u
+  INNER JOIN users_messages um ON ( u.id = users_messages.from_id )
+  INNER JOIN users u2 ON (u2.id = users_messages.to_id)
+)
+UNION
+(
+  SELECT u.name as receiver_name, u.id as receiver_id,
+    u2.name as sender_name, u2.id as sender_id,
+    um.content, um.updated_at, um.created_at
+  FROM users u
+  INNER JOIN users_messages um ON ( u.id = users_messages.to_id )
+  INNER JOIN users u2 ON ( u2.id = users_messages.from_id )
+)
+ORDER BY created_at ASC
+  [1m[36m (0.3ms)[0m  [1mDROP VIEW messages[0m
+SQLite3::SQLException: no such view: messages: DROP VIEW messages
+  [1m[35m (1.8ms)[0m  CREATE TABLE "schema_migrations" ("version" varchar NOT NULL) 
+  [1m[36m (0.1ms)[0m  [1mselect sqlite_version(*)[0m
+  [1m[35m (0.8ms)[0m  CREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version")
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Migrating to CreateTestTables (20160208084226)
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36m (0.3ms)[0m  [1mCREATE TABLE "users" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35m (0.1ms)[0m  CREATE  INDEX "index_users_on_name" ON "users" ("name")
+  [1m[36m (0.1ms)[0m  [1mCREATE TABLE "user_messages" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "from_id" integer, "to_id" integer, "content" text, "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35m (0.1ms)[0m  CREATE  INDEX "index_user_messages_on_from_id" ON "user_messages" ("from_id")
+  [1m[36m (0.1ms)[0m  [1m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_user_messages_on_from_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_user_messages_on_from_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  CREATE  INDEX "index_user_messages_on_to_id" ON "user_messages" ("to_id")
+  [1m[36mSQL (0.1ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20160208084226"]]
+  [1m[35m (2.1ms)[0m  commit transaction
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.1ms)[0m              SELECT sql
+            FROM sqlite_master
+            WHERE name='index_user_messages_on_to_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_user_messages_on_to_id' AND type='index'
+
+  [1m[36m (0.1ms)[0m  [1m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_user_messages_on_from_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_user_messages_on_from_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m              SELECT sql
+            FROM sqlite_master
+            WHERE name='index_users_on_name' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_users_on_name' AND type='index'
+
+  [1m[36m (0.1ms)[0m  [1mCREATE VIEW messages AS (
+  SELECT u2.name as receiver_name, u2.id as receiver_id,
+    u1.name as sender_name, u1.id as sender_id,
+    um.content, um.updated_at, um.created_at
+  FROM users u
+  INNER JOIN users_messages um ON ( u.id = users_messages.from_id )
+  INNER JOIN users u2 ON (u2.id = users_messages.to_id)
+)
+UNION
+(
+  SELECT u.name as receiver_name, u.id as receiver_id,
+    u2.name as sender_name, u2.id as sender_id,
+    um.content, um.updated_at, um.created_at
+  FROM users u
+  INNER JOIN users_messages um ON ( u.id = users_messages.to_id )
+  INNER JOIN users u2 ON ( u2.id = users_messages.from_id )
+)
+ORDER BY created_at ASC[0m
+SQLite3::SQLException: near "(": syntax error: CREATE VIEW messages AS (
+  SELECT u2.name as receiver_name, u2.id as receiver_id,
+    u1.name as sender_name, u1.id as sender_id,
+    um.content, um.updated_at, um.created_at
+  FROM users u
+  INNER JOIN users_messages um ON ( u.id = users_messages.from_id )
+  INNER JOIN users u2 ON (u2.id = users_messages.to_id)
+)
+UNION
+(
+  SELECT u.name as receiver_name, u.id as receiver_id,
+    u2.name as sender_name, u2.id as sender_id,
+    um.content, um.updated_at, um.created_at
+  FROM users u
+  INNER JOIN users_messages um ON ( u.id = users_messages.to_id )
+  INNER JOIN users u2 ON ( u2.id = users_messages.from_id )
+)
+ORDER BY created_at ASC
+  [1m[36m (0.3ms)[0m  [1mDROP VIEW messages[0m
+SQLite3::SQLException: no such view: messages: DROP VIEW messages
+  [1m[35m (1.8ms)[0m  CREATE TABLE "schema_migrations" ("version" varchar NOT NULL) 
+  [1m[36m (0.1ms)[0m  [1mselect sqlite_version(*)[0m
+  [1m[35m (1.0ms)[0m  CREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version")
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Migrating to CreateTestTables (20160208084226)
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36m (0.3ms)[0m  [1mCREATE TABLE "users" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35m (0.1ms)[0m  CREATE  INDEX "index_users_on_name" ON "users" ("name")
+  [1m[36m (0.2ms)[0m  [1mCREATE TABLE "user_messages" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "from_id" integer, "to_id" integer, "content" text, "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35m (0.1ms)[0m  CREATE  INDEX "index_user_messages_on_from_id" ON "user_messages" ("from_id")
+  [1m[36m (0.1ms)[0m  [1m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_user_messages_on_from_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_user_messages_on_from_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  CREATE  INDEX "index_user_messages_on_to_id" ON "user_messages" ("to_id")
+  [1m[36mSQL (0.1ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20160208084226"]]
+  [1m[35m (2.1ms)[0m  commit transaction
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.1ms)[0m              SELECT sql
+            FROM sqlite_master
+            WHERE name='index_user_messages_on_to_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_user_messages_on_to_id' AND type='index'
+
+  [1m[36m (0.1ms)[0m  [1m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_user_messages_on_from_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_user_messages_on_from_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m              SELECT sql
+            FROM sqlite_master
+            WHERE name='index_users_on_name' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_users_on_name' AND type='index'
+
+  [1m[36m (0.2ms)[0m  [1mCREATE VIEW messages AS 
+  SELECT u2.name as receiver_name, u2.id as receiver_id,
+    u1.name as sender_name, u1.id as sender_id,
+    um.content, um.updated_at, um.created_at
+  FROM users u
+  INNER JOIN users_messages um ON ( u.id = users_messages.from_id )
+  INNER JOIN users u2 ON (u2.id = users_messages.to_id)
+
+UNION
+
+  SELECT u.name as receiver_name, u.id as receiver_id,
+    u2.name as sender_name, u2.id as sender_id,
+    um.content, um.updated_at, um.created_at
+  FROM users u
+  INNER JOIN users_messages um ON ( u.id = users_messages.to_id )
+  INNER JOIN users u2 ON ( u2.id = users_messages.from_id )
+
+ORDER BY created_at ASC[0m
+SQLite3::SQLException: no such table: main.users_messages: CREATE VIEW messages AS 
+  SELECT u2.name as receiver_name, u2.id as receiver_id,
+    u1.name as sender_name, u1.id as sender_id,
+    um.content, um.updated_at, um.created_at
+  FROM users u
+  INNER JOIN users_messages um ON ( u.id = users_messages.from_id )
+  INNER JOIN users u2 ON (u2.id = users_messages.to_id)
+
+UNION
+
+  SELECT u.name as receiver_name, u.id as receiver_id,
+    u2.name as sender_name, u2.id as sender_id,
+    um.content, um.updated_at, um.created_at
+  FROM users u
+  INNER JOIN users_messages um ON ( u.id = users_messages.to_id )
+  INNER JOIN users u2 ON ( u2.id = users_messages.from_id )
+
+ORDER BY created_at ASC
+  [1m[36m (0.3ms)[0m  [1mDROP VIEW messages[0m
+SQLite3::SQLException: no such view: messages: DROP VIEW messages
+  [1m[35m (1.6ms)[0m  CREATE TABLE "schema_migrations" ("version" varchar NOT NULL) 
+  [1m[36m (0.1ms)[0m  [1mselect sqlite_version(*)[0m
+  [1m[35m (1.0ms)[0m  CREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version")
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Migrating to CreateTestTables (20160208084226)
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36m (0.3ms)[0m  [1mCREATE TABLE "users" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35m (0.1ms)[0m  CREATE  INDEX "index_users_on_name" ON "users" ("name")
+  [1m[36m (0.1ms)[0m  [1mCREATE TABLE "user_messages" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "from_id" integer, "to_id" integer, "content" text, "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35m (0.1ms)[0m  CREATE  INDEX "index_user_messages_on_from_id" ON "user_messages" ("from_id")
+  [1m[36m (0.1ms)[0m  [1m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_user_messages_on_from_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_user_messages_on_from_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  CREATE  INDEX "index_user_messages_on_to_id" ON "user_messages" ("to_id")
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20160208084226"]]
+  [1m[35m (1.0ms)[0m  commit transaction
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.1ms)[0m              SELECT sql
+            FROM sqlite_master
+            WHERE name='index_user_messages_on_to_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_user_messages_on_to_id' AND type='index'
+
+  [1m[36m (0.1ms)[0m  [1m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_user_messages_on_from_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_user_messages_on_from_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m              SELECT sql
+            FROM sqlite_master
+            WHERE name='index_users_on_name' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_users_on_name' AND type='index'
+
+  [1m[36m (0.1ms)[0m  [1mCREATE VIEW messages AS 
+  SELECT u2.name as receiver_name, u2.id as receiver_id,
+    u1.name as sender_name, u1.id as sender_id,
+    um.content, um.updated_at, um.created_at
+  FROM users u
+  INNER JOIN user_messages um ON ( u.id = user_messages.from_id )
+  INNER JOIN users u2 ON (u2.id = user_messages.to_id)
+
+UNION
+(
+  SELECT u.name as receiver_name, u.id as receiver_id,
+    u2.name as sender_name, u2.id as sender_id,
+    um.content, um.updated_at, um.created_at
+  FROM users u
+  INNER JOIN user_messages um ON ( u.id = user_messages.to_id )
+  INNER JOIN users u2 ON ( u2.id = user_messages.from_id )
+)
+ORDER BY created_at ASC[0m
+SQLite3::SQLException: near "(": syntax error: CREATE VIEW messages AS 
+  SELECT u2.name as receiver_name, u2.id as receiver_id,
+    u1.name as sender_name, u1.id as sender_id,
+    um.content, um.updated_at, um.created_at
+  FROM users u
+  INNER JOIN user_messages um ON ( u.id = user_messages.from_id )
+  INNER JOIN users u2 ON (u2.id = user_messages.to_id)
+
+UNION
+(
+  SELECT u.name as receiver_name, u.id as receiver_id,
+    u2.name as sender_name, u2.id as sender_id,
+    um.content, um.updated_at, um.created_at
+  FROM users u
+  INNER JOIN user_messages um ON ( u.id = user_messages.to_id )
+  INNER JOIN users u2 ON ( u2.id = user_messages.from_id )
+)
+ORDER BY created_at ASC
+  [1m[36m (0.3ms)[0m  [1mDROP VIEW messages[0m
+SQLite3::SQLException: no such view: messages: DROP VIEW messages
+  [1m[35m (1.7ms)[0m  CREATE TABLE "schema_migrations" ("version" varchar NOT NULL) 
+  [1m[36m (0.1ms)[0m  [1mselect sqlite_version(*)[0m
+  [1m[35m (0.8ms)[0m  CREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version")
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Migrating to CreateTestTables (20160208084226)
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36m (0.4ms)[0m  [1mCREATE TABLE "users" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35m (0.1ms)[0m  CREATE  INDEX "index_users_on_name" ON "users" ("name")
+  [1m[36m (0.1ms)[0m  [1mCREATE TABLE "user_messages" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "from_id" integer, "to_id" integer, "content" text, "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35m (0.1ms)[0m  CREATE  INDEX "index_user_messages_on_from_id" ON "user_messages" ("from_id")
+  [1m[36m (0.1ms)[0m  [1m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_user_messages_on_from_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_user_messages_on_from_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  CREATE  INDEX "index_user_messages_on_to_id" ON "user_messages" ("to_id")
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20160208084226"]]
+  [1m[35m (0.8ms)[0m  commit transaction
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.1ms)[0m              SELECT sql
+            FROM sqlite_master
+            WHERE name='index_user_messages_on_to_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_user_messages_on_to_id' AND type='index'
+
+  [1m[36m (0.1ms)[0m  [1m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_user_messages_on_from_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_user_messages_on_from_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m              SELECT sql
+            FROM sqlite_master
+            WHERE name='index_users_on_name' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_users_on_name' AND type='index'
+
+  [1m[36m (0.1ms)[0m  [1mCREATE VIEW messages AS 
+  SELECT u2.name as receiver_name, u2.id as receiver_id,
+    u1.name as sender_name, u1.id as sender_id,
+    um.content, um.updated_at, um.created_at
+  FROM users u
+  INNER JOIN user_messages um ON ( u.id = user_messages.from_id )
+  INNER JOIN users u2 ON (u2.id = user_messages.to_id)
+
+UNION (
+  SELECT u.name as receiver_name, u.id as receiver_id,
+    u2.name as sender_name, u2.id as sender_id,
+    um.content, um.updated_at, um.created_at
+  FROM users u
+  INNER JOIN user_messages um ON ( u.id = user_messages.to_id )
+  INNER JOIN users u2 ON ( u2.id = user_messages.from_id )
+)
+ORDER BY created_at ASC[0m
+SQLite3::SQLException: near "(": syntax error: CREATE VIEW messages AS 
+  SELECT u2.name as receiver_name, u2.id as receiver_id,
+    u1.name as sender_name, u1.id as sender_id,
+    um.content, um.updated_at, um.created_at
+  FROM users u
+  INNER JOIN user_messages um ON ( u.id = user_messages.from_id )
+  INNER JOIN users u2 ON (u2.id = user_messages.to_id)
+
+UNION (
+  SELECT u.name as receiver_name, u.id as receiver_id,
+    u2.name as sender_name, u2.id as sender_id,
+    um.content, um.updated_at, um.created_at
+  FROM users u
+  INNER JOIN user_messages um ON ( u.id = user_messages.to_id )
+  INNER JOIN users u2 ON ( u2.id = user_messages.from_id )
+)
+ORDER BY created_at ASC
+  [1m[36m (0.4ms)[0m  [1mDROP VIEW messages[0m
+SQLite3::SQLException: no such view: messages: DROP VIEW messages
+  [1m[35m (2.1ms)[0m  CREATE TABLE "schema_migrations" ("version" varchar NOT NULL) 
+  [1m[36m (0.1ms)[0m  [1mselect sqlite_version(*)[0m
+  [1m[35m (1.1ms)[0m  CREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version")
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Migrating to CreateTestTables (20160208084226)
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36m (0.3ms)[0m  [1mCREATE TABLE "users" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35m (0.1ms)[0m  CREATE  INDEX "index_users_on_name" ON "users" ("name")
+  [1m[36m (0.2ms)[0m  [1mCREATE TABLE "user_messages" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "from_id" integer, "to_id" integer, "content" text, "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35m (0.1ms)[0m  CREATE  INDEX "index_user_messages_on_from_id" ON "user_messages" ("from_id")
+  [1m[36m (0.1ms)[0m  [1m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_user_messages_on_from_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_user_messages_on_from_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  CREATE  INDEX "index_user_messages_on_to_id" ON "user_messages" ("to_id")
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20160208084226"]]
+  [1m[35m (0.8ms)[0m  commit transaction
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.1ms)[0m              SELECT sql
+            FROM sqlite_master
+            WHERE name='index_user_messages_on_to_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_user_messages_on_to_id' AND type='index'
+
+  [1m[36m (0.1ms)[0m  [1m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_user_messages_on_from_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_user_messages_on_from_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m              SELECT sql
+            FROM sqlite_master
+            WHERE name='index_users_on_name' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_users_on_name' AND type='index'
+
+  [1m[36m (0.3ms)[0m  [1mCREATE VIEW messages AS 
+SELECT u2.name as receiver_name, u2.id as receiver_id,
+    u1.name as sender_name, u1.id as sender_id,
+    um.content, um.updated_at, um.created_at
+  FROM users u
+  INNER JOIN user_messages um ON ( u.id = user_messages.from_id )
+  INNER JOIN users u2 ON (u2.id = user_messages.to_id)
+UNION
+  SELECT u.name as receiver_name, u.id as receiver_id,
+    u2.name as sender_name, u2.id as sender_id,
+    um.content, um.updated_at, um.created_at
+  FROM users u
+  INNER JOIN user_messages um ON ( u.id = user_messages.to_id )
+  INNER JOIN users u2 ON ( u2.id = user_messages.from_id )
+ORDER BY created_at ASC[0m
+SQLite3::SQLException: no such column: user_messages.to_id: CREATE VIEW messages AS 
+SELECT u2.name as receiver_name, u2.id as receiver_id,
+    u1.name as sender_name, u1.id as sender_id,
+    um.content, um.updated_at, um.created_at
+  FROM users u
+  INNER JOIN user_messages um ON ( u.id = user_messages.from_id )
+  INNER JOIN users u2 ON (u2.id = user_messages.to_id)
+UNION
+  SELECT u.name as receiver_name, u.id as receiver_id,
+    u2.name as sender_name, u2.id as sender_id,
+    um.content, um.updated_at, um.created_at
+  FROM users u
+  INNER JOIN user_messages um ON ( u.id = user_messages.to_id )
+  INNER JOIN users u2 ON ( u2.id = user_messages.from_id )
+ORDER BY created_at ASC
+  [1m[36m (0.3ms)[0m  [1mDROP VIEW messages[0m
+SQLite3::SQLException: no such view: messages: DROP VIEW messages
+  [1m[35m (1.5ms)[0m  CREATE TABLE "schema_migrations" ("version" varchar NOT NULL) 
+  [1m[36m (0.1ms)[0m  [1mselect sqlite_version(*)[0m
+  [1m[35m (0.9ms)[0m  CREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version")
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Migrating to CreateTestTables (20160208084226)
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36m (0.3ms)[0m  [1mCREATE TABLE "users" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) [0m
+  [1m[35m (0.1ms)[0m  CREATE  INDEX "index_users_on_name" ON "users" ("name")
+  [1m[36m (0.1ms)[0m  [1mCREATE TABLE "user_messages" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "from_id" integer, "to_id" integer, "content" text, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) [0m
+  [1m[35m (0.1ms)[0m  CREATE  INDEX "index_user_messages_on_from_id" ON "user_messages" ("from_id")
+  [1m[36m (0.1ms)[0m  [1m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_user_messages_on_from_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_user_messages_on_from_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  CREATE  INDEX "index_user_messages_on_to_id" ON "user_messages" ("to_id")
+  [1m[36mSQL (0.4ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20160208084226"]]
+  [1m[35m (0.9ms)[0m  commit transaction
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.1ms)[0m              SELECT sql
+            FROM sqlite_master
+            WHERE name='index_user_messages_on_to_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_user_messages_on_to_id' AND type='index'
+
+  [1m[36m (0.1ms)[0m  [1m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_user_messages_on_from_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_user_messages_on_from_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m              SELECT sql
+            FROM sqlite_master
+            WHERE name='index_users_on_name' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_users_on_name' AND type='index'
+
+  [1m[36m (0.2ms)[0m  [1mCREATE VIEW messages AS 
+SELECT u2.name as receiver_name, u2.id as receiver_id,
+    u1.name as sender_name, u1.id as sender_id,
+    um.content, um.updated_at, um.created_at
+  FROM users u
+  INNER JOIN user_messages um ON ( u.id = user_messages.from_id )
+  INNER JOIN users u2 ON (u2.id = user_messages.to_id)
+UNION
+  SELECT u.name as receiver_name, u.id as receiver_id,
+    u2.name as sender_name, u2.id as sender_id,
+    um.content, um.updated_at, um.created_at
+  FROM users u
+  INNER JOIN user_messages um ON ( u.id = user_messages.to_id )
+  INNER JOIN users u2 ON ( u2.id = user_messages.from_id )
+ORDER BY created_at ASC[0m
+SQLite3::SQLException: no such column: user_messages.to_id: CREATE VIEW messages AS 
+SELECT u2.name as receiver_name, u2.id as receiver_id,
+    u1.name as sender_name, u1.id as sender_id,
+    um.content, um.updated_at, um.created_at
+  FROM users u
+  INNER JOIN user_messages um ON ( u.id = user_messages.from_id )
+  INNER JOIN users u2 ON (u2.id = user_messages.to_id)
+UNION
+  SELECT u.name as receiver_name, u.id as receiver_id,
+    u2.name as sender_name, u2.id as sender_id,
+    um.content, um.updated_at, um.created_at
+  FROM users u
+  INNER JOIN user_messages um ON ( u.id = user_messages.to_id )
+  INNER JOIN users u2 ON ( u2.id = user_messages.from_id )
+ORDER BY created_at ASC
+  [1m[36m (0.3ms)[0m  [1mDROP VIEW messages[0m
+SQLite3::SQLException: no such view: messages: DROP VIEW messages
+  [1m[35m (1.9ms)[0m  CREATE TABLE "schema_migrations" ("version" varchar NOT NULL) 
+  [1m[36m (0.1ms)[0m  [1mselect sqlite_version(*)[0m
+  [1m[35m (1.1ms)[0m  CREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version")
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Migrating to CreateTestTables (20160208084226)
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36m (0.3ms)[0m  [1mCREATE TABLE "users" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) [0m
+  [1m[35m (0.1ms)[0m  CREATE  INDEX "index_users_on_name" ON "users" ("name")
+  [1m[36m (0.1ms)[0m  [1mCREATE TABLE "user_messages" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "from_id" integer, "to_id" integer, "content" text, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) [0m
+  [1m[35m (0.1ms)[0m  CREATE  INDEX "index_user_messages_on_from_id" ON "user_messages" ("from_id")
+  [1m[36m (0.1ms)[0m  [1m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_user_messages_on_from_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_user_messages_on_from_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  CREATE  INDEX "index_user_messages_on_to_id" ON "user_messages" ("to_id")
+  [1m[36mSQL (0.1ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20160208084226"]]
+  [1m[35m (0.8ms)[0m  commit transaction
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.1ms)[0m              SELECT sql
+            FROM sqlite_master
+            WHERE name='index_user_messages_on_to_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_user_messages_on_to_id' AND type='index'
+
+  [1m[36m (0.1ms)[0m  [1m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_user_messages_on_from_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_user_messages_on_from_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m              SELECT sql
+            FROM sqlite_master
+            WHERE name='index_users_on_name' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_users_on_name' AND type='index'
+
+  [1m[36m (0.2ms)[0m  [1mCREATE VIEW messages AS 
+SELECT u2.name as receiver_name, u2.id as receiver_id,
+    u1.name as sender_name, u1.id as sender_id,
+    um.content, um.updated_at, um.created_at
+  FROM users u
+  INNER JOIN user_messages um ON ( u.id = um.from_id )
+  INNER JOIN users u2 ON (u2.id = um.to_id)
+UNION
+  SELECT u.name as receiver_name, u.id as receiver_id,
+    u2.name as sender_name, u2.id as sender_id,
+    um.content, um.updated_at, um.created_at
+  FROM users u
+  INNER JOIN user_messages um ON ( u.id = um.to_id )
+  INNER JOIN users u2 ON ( u2.id = um.from_id )
+ORDER BY created_at ASC[0m
+SQLite3::SQLException: no such column: u1.name: CREATE VIEW messages AS 
+SELECT u2.name as receiver_name, u2.id as receiver_id,
+    u1.name as sender_name, u1.id as sender_id,
+    um.content, um.updated_at, um.created_at
+  FROM users u
+  INNER JOIN user_messages um ON ( u.id = um.from_id )
+  INNER JOIN users u2 ON (u2.id = um.to_id)
+UNION
+  SELECT u.name as receiver_name, u.id as receiver_id,
+    u2.name as sender_name, u2.id as sender_id,
+    um.content, um.updated_at, um.created_at
+  FROM users u
+  INNER JOIN user_messages um ON ( u.id = um.to_id )
+  INNER JOIN users u2 ON ( u2.id = um.from_id )
+ORDER BY created_at ASC
+  [1m[36m (0.3ms)[0m  [1mDROP VIEW messages[0m
+SQLite3::SQLException: no such view: messages: DROP VIEW messages
+  [1m[35m (1.8ms)[0m  CREATE TABLE "schema_migrations" ("version" varchar NOT NULL) 
+  [1m[36m (0.1ms)[0m  [1mselect sqlite_version(*)[0m
+  [1m[35m (0.9ms)[0m  CREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version")
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Migrating to CreateTestTables (20160208084226)
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36m (0.4ms)[0m  [1mCREATE TABLE "users" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) [0m
+  [1m[35m (0.2ms)[0m  CREATE  INDEX "index_users_on_name" ON "users" ("name")
+  [1m[36m (0.2ms)[0m  [1mCREATE TABLE "user_messages" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "from_id" integer, "to_id" integer, "content" text, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) [0m
+  [1m[35m (0.1ms)[0m  CREATE  INDEX "index_user_messages_on_from_id" ON "user_messages" ("from_id")
+  [1m[36m (0.1ms)[0m  [1m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_user_messages_on_from_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_user_messages_on_from_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  CREATE  INDEX "index_user_messages_on_to_id" ON "user_messages" ("to_id")
+  [1m[36mSQL (0.1ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20160208084226"]]
+  [1m[35m (0.8ms)[0m  commit transaction
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.1ms)[0m              SELECT sql
+            FROM sqlite_master
+            WHERE name='index_user_messages_on_to_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_user_messages_on_to_id' AND type='index'
+
+  [1m[36m (0.1ms)[0m  [1m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_user_messages_on_from_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_user_messages_on_from_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m              SELECT sql
+            FROM sqlite_master
+            WHERE name='index_users_on_name' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_users_on_name' AND type='index'
+
+  [1m[36m (0.2ms)[0m  [1mCREATE VIEW messages AS 
+SELECT u2.name as receiver_name, u2.id as receiver_id,
+    u1.name as sender_name, u1.id as sender_id,
+    um.content, um.updated_at, um.created_at
+  FROM users u1
+  INNER JOIN user_messages um ON ( u.id = um.from_id )
+  INNER JOIN users u2 ON (u2.id = um.to_id)
+UNION
+  SELECT u1.name as receiver_name, u1.id as receiver_id,
+    u2.name as sender_name, u2.id as sender_id,
+    um.content, um.updated_at, um.created_at
+  FROM users u1
+  INNER JOIN user_messages um ON ( u.id = um.to_id )
+  INNER JOIN users u2 ON ( u2.id = um.from_id )
+ORDER BY created_at ASC[0m
+SQLite3::SQLException: no such column: u.id: CREATE VIEW messages AS 
+SELECT u2.name as receiver_name, u2.id as receiver_id,
+    u1.name as sender_name, u1.id as sender_id,
+    um.content, um.updated_at, um.created_at
+  FROM users u1
+  INNER JOIN user_messages um ON ( u.id = um.from_id )
+  INNER JOIN users u2 ON (u2.id = um.to_id)
+UNION
+  SELECT u1.name as receiver_name, u1.id as receiver_id,
+    u2.name as sender_name, u2.id as sender_id,
+    um.content, um.updated_at, um.created_at
+  FROM users u1
+  INNER JOIN user_messages um ON ( u.id = um.to_id )
+  INNER JOIN users u2 ON ( u2.id = um.from_id )
+ORDER BY created_at ASC
+  [1m[36m (0.3ms)[0m  [1mDROP VIEW messages[0m
+SQLite3::SQLException: no such view: messages: DROP VIEW messages
+  [1m[35m (1.6ms)[0m  CREATE TABLE "schema_migrations" ("version" varchar NOT NULL) 
+  [1m[36m (0.1ms)[0m  [1mselect sqlite_version(*)[0m
+  [1m[35m (1.0ms)[0m  CREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version")
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Migrating to CreateTestTables (20160208084226)
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36m (0.3ms)[0m  [1mCREATE TABLE "users" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) [0m
+  [1m[35m (0.3ms)[0m  CREATE  INDEX "index_users_on_name" ON "users" ("name")
+  [1m[36m (0.1ms)[0m  [1mCREATE TABLE "user_messages" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "from_id" integer, "to_id" integer, "content" text, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) [0m
+  [1m[35m (0.1ms)[0m  CREATE  INDEX "index_user_messages_on_from_id" ON "user_messages" ("from_id")
+  [1m[36m (0.1ms)[0m  [1m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_user_messages_on_from_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_user_messages_on_from_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  CREATE  INDEX "index_user_messages_on_to_id" ON "user_messages" ("to_id")
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20160208084226"]]
+  [1m[35m (0.8ms)[0m  commit transaction
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.1ms)[0m              SELECT sql
+            FROM sqlite_master
+            WHERE name='index_user_messages_on_to_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_user_messages_on_to_id' AND type='index'
+
+  [1m[36m (0.1ms)[0m  [1m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_user_messages_on_from_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_user_messages_on_from_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m              SELECT sql
+            FROM sqlite_master
+            WHERE name='index_users_on_name' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_users_on_name' AND type='index'
+
+  [1m[36m (0.2ms)[0m  [1mCREATE VIEW messages AS 
+SELECT u2.name as receiver_name, u2.id as receiver_id,
+    u1.name as sender_name, u1.id as sender_id,
+    um.content, um.updated_at, um.created_at
+  FROM users u1
+  INNER JOIN user_messages um ON ( u1.id = um.from_id )
+  INNER JOIN users u2 ON (u2.id = um.to_id)
+UNION
+  SELECT u1.name as receiver_name, u1.id as receiver_id,
+    u2.name as sender_name, u2.id as sender_id,
+    um.content, um.updated_at, um.created_at
+  FROM users u1
+  INNER JOIN user_messages um ON ( u1.id = um.to_id )
+  INNER JOIN users u2 ON ( u2.id = um.from_id )
+ORDER BY created_at ASC[0m
+SQLite3::SQLException: 1st ORDER BY term does not match any column in the result set: CREATE VIEW messages AS 
+SELECT u2.name as receiver_name, u2.id as receiver_id,
+    u1.name as sender_name, u1.id as sender_id,
+    um.content, um.updated_at, um.created_at
+  FROM users u1
+  INNER JOIN user_messages um ON ( u1.id = um.from_id )
+  INNER JOIN users u2 ON (u2.id = um.to_id)
+UNION
+  SELECT u1.name as receiver_name, u1.id as receiver_id,
+    u2.name as sender_name, u2.id as sender_id,
+    um.content, um.updated_at, um.created_at
+  FROM users u1
+  INNER JOIN user_messages um ON ( u1.id = um.to_id )
+  INNER JOIN users u2 ON ( u2.id = um.from_id )
+ORDER BY created_at ASC
+  [1m[36m (0.3ms)[0m  [1mDROP VIEW messages[0m
+SQLite3::SQLException: no such view: messages: DROP VIEW messages
+  [1m[35m (2.0ms)[0m  CREATE TABLE "schema_migrations" ("version" varchar NOT NULL) 
+  [1m[36m (0.1ms)[0m  [1mselect sqlite_version(*)[0m
+  [1m[35m (1.2ms)[0m  CREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version")
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Migrating to CreateTestTables (20160208084226)
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36m (0.4ms)[0m  [1mCREATE TABLE "users" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) [0m
+  [1m[35m (0.1ms)[0m  CREATE  INDEX "index_users_on_name" ON "users" ("name")
+  [1m[36m (0.1ms)[0m  [1mCREATE TABLE "user_messages" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "from_id" integer, "to_id" integer, "content" text, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) [0m
+  [1m[35m (0.1ms)[0m  CREATE  INDEX "index_user_messages_on_from_id" ON "user_messages" ("from_id")
+  [1m[36m (0.1ms)[0m  [1m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_user_messages_on_from_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_user_messages_on_from_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  CREATE  INDEX "index_user_messages_on_to_id" ON "user_messages" ("to_id")
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20160208084226"]]
+  [1m[35m (0.7ms)[0m  commit transaction
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.1ms)[0m              SELECT sql
+            FROM sqlite_master
+            WHERE name='index_user_messages_on_to_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_user_messages_on_to_id' AND type='index'
+
+  [1m[36m (0.1ms)[0m  [1m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_user_messages_on_from_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_user_messages_on_from_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m              SELECT sql
+            FROM sqlite_master
+            WHERE name='index_users_on_name' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_users_on_name' AND type='index'
+
+  [1m[36m (0.9ms)[0m  [1mCREATE VIEW messages AS 
+SELECT u2.name as receiver_name, u2.id as receiver_id,
+    u1.name as sender_name, u1.id as sender_id,
+    um.content, um.updated_at, um.created_at
+  FROM users u1
+  INNER JOIN user_messages um ON ( u1.id = um.from_id )
+  INNER JOIN users u2 ON (u2.id = um.to_id)
+UNION
+  SELECT u1.name as receiver_name, u1.id as receiver_id,
+    u2.name as sender_name, u2.id as sender_id,
+    um.content, um.updated_at, um.created_at
+  FROM users u1
+  INNER JOIN user_messages um ON ( u1.id = um.to_id )
+  INNER JOIN users u2 ON ( u2.id = um.from_id )
+ORDER BY um.created_at ASC[0m

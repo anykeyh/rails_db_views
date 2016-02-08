@@ -48,6 +48,10 @@ class RailsDbViews::DatabaseSymbol
     status == Status::UNLOADED
   end
 
+  def uncommented_sql_content
+    sql_content.split("\n").reject{|x| x=~ COMMENTS }.join("\n")
+  end
+
   def create!
     return if marked_as_deleted? || loaded?
 
@@ -82,8 +86,8 @@ class RailsDbViews::DatabaseSymbol
 
     begin
       ActiveRecord::Base.connection.execute(drop_sql)
-    #rescue ActiveRecord::ActiveRecordError => e #Probably because the symbol doesn't exists yet.
-    #  handle_error_on_drop
+    rescue ActiveRecord::ActiveRecordError => e #Probably because the symbol doesn't exists yet.
+      handle_error_on_drop
     end
 
     self.status = Status::LOADED
@@ -106,6 +110,11 @@ protected
   TWO_DASH_DIRECTIVE_START = /^--[ \t]*!/
   SHARP_CHAR_DIRECTIVE_START = /^#[ \t]*!/
   DIRECTIVE_START = /#{TWO_DASH_DIRECTIVE_START}|#{SHARP_CHAR_DIRECTIVE_START}/
+
+  #It's not very safe in case we start a line into a string with the characters -- or #.
+  COMMENTS_TWO_DASH  = /^--.*$/
+  COMMENTS_SHARP     = /^#.*$/
+  COMMENTS           = /#{COMMENTS_TWO_DASH}|#{COMMENTS_SHARP}/
 
   def circular_reference_error
     raise CircularReferenceError, "Circular file reference! (file: #{path})"

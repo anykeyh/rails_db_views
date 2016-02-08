@@ -2,8 +2,8 @@ PATH
   remote: .
   specs:
     rails_db_views (0.0.4)
-      rails (>= 4.0)
-      rake-hooks (~> 1.2.3)
+      rails (~> 4, >= 4.0)
+      rake-hooks (~> 1.2, >= 1.2.3)
 
 GEM
   remote: https://rubygems.org/

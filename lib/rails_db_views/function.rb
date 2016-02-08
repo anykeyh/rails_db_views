@@ -1,7 +1,7 @@
 class RailsDbViews::Function < RailsDbViews::DatabaseSymbol
   def create_sql
     puts "CREATE OR REPLACE FUNCTION #{name}..."
-    "CREATE OR REPLACE FUNCTION #{name} #{sql_content}"
+    "CREATE OR REPLACE FUNCTION #{name} #{uncommented_sql_content}"
   end
 
   def drop_sql

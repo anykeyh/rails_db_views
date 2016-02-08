@@ -482,3 +482,15 @@ $$ LANGUAGE plpgsql;[0m
   [1m[36m (12.4ms)[0m  [1mCREATE VIEW required AS SELECT 1 as id[0m
   [1m[35m (12.6ms)[0m  CREATE VIEW hello_world AS --!require required
 SELECT 'HelloWorld' WHERE ( SELECT id FROM required ) IN (1)
+  [1m[36m (2.3ms)[0m  [1mCREATE OR REPLACE FUNCTION add (x integer, y integer) RETURNS integer AS $$
+  BEGIN
+    RETURN x + y;
+  END;
+$$ LANGUAGE plpgsql;[0m
+  [1m[35m (7.2ms)[0m  DROP VIEW hello_world
+  [1m[36m (6.7ms)[0m  [1mDROP VIEW required[0m
+  [1m[35mActiveRecord::SchemaMigration Load (0.7ms)[0m  SELECT "schema_migrations".* FROM "schema_migrations"
+  [1m[36m (13.2ms)[0m  [1mCREATE VIEW required AS SELECT 1 as id[0m
+  [1m[35m (7.1ms)[0m  CREATE VIEW hello_world AS --!require required
+SELECT 'HelloWorld' WHERE ( SELECT id FROM required ) IN (1)
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
