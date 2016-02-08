@@ -15,7 +15,12 @@ Finally, whenever you migrate and remove a field from a table used by a view, po
 
 # Changelog
 
-## 0.4 - Finally `rails_db_view` comes with new features!
+## 0.0.5 – Bugfixes and test
+
+I fixed issues making the gem not working + added a more complex example/test. You can call "rake test" into the dummy to check (even if it's not automated unit test...).
+The example use heavily postgres functionnality, so it works only on postgres.
+
+## 0.0.4 - Finally `rails_db_view` comes with new features!
 
 ### Functions
 
@@ -42,7 +47,7 @@ I've made a refactoring into the gem, to make it more understandable and easy to
 
 Errors and error messages are more clear (one type per kind of error).
 
-## 0.3
+## 0.0.3
 
 First working commit
 I've fixed rails version to be able to use with rails >4.
