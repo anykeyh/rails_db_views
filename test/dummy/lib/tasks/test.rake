@@ -16,5 +16,15 @@ task :test do
   Rake::Task["environment"].invoke
 
   #Create some models
-  
+  jack = User.create! name: "Jack"
+  cindy = User.create! name: "Cindy"
+  henry = User.create! name: "Henry"
+
+  jack.message! cindy, "Hey, how are you?"
+  cindy.message! jack, "I'm fine, and you?"
+  henry.message! cindy, "Me too, I want to chat with you babe!"
+
+  puts henry.chats.inspect
+  puts cindy.chats.inspect
+  puts jack.chats.inspect
 end

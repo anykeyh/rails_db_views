@@ -3,3 +3,4 @@ class UserMessage < ActiveRecord::Base
   belongs_to :to, class_name: "User"
 end
 
+
