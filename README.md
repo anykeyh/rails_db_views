@@ -57,8 +57,10 @@ I've fixed rails version to be able to use with rails >4.
 Quite simple. Add rails_db_view in your Gemfile:
 
 ```Gemfile
-gem 'rails_db_views'
+gem 'rails_db_views', github: 'anykeyh/rails_db_views'
 ```
+
+Note: Don't use the rubygem one, it's probably outdated...
 
 ## Views
 You create your views into `db/views` directory (create the directory if needed).
