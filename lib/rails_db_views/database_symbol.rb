@@ -1,6 +1,7 @@
 class RailsDbViews::DatabaseSymbol
   class CircularReferenceError < RuntimeError; end
   class SymbolNotFound < RuntimeError; end
+  class IllegalDirective < RuntimeError; end
 
   attr_accessor :path, :sql_content, :status, :required, :inverse_of_required, :marked_as_deleted, :name
   alias :marked_as_deleted? :marked_as_deleted
@@ -135,7 +136,7 @@ protected
       case d
       when /^require /
         self.required += d.split(/[ \t]+/)[1..-1]
-      when /^delete(d?) /
+      when /^delete(d?)/
         self.mark_as_delete!
       else
         raise IllegalDirective, "I don't know what to do with `#{d}` (in #{path})"
