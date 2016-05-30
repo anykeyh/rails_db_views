@@ -15,6 +15,25 @@ Finally, whenever you migrate and remove a field from a table used by a view, po
 
 # Changelog
 
+## 0.0.6 – Support of rails 5 and \#{ String replacement }
+
+We are proud to announce than `rails-db-views` works well into Rails 5 project.
+We are using it in already two differents projects, and everything works.
+
+Due to another project, we needed to add the string replacement functionnality.
+Because we are using `dblink` extension, and we don't want to share the parameters
+like password or dbname straight into the view file.
+
+```sql
+  dblink('dbname=database user=user password=password', 'SELECT * FROM SOME_SQL')
+```
+
+Then become:
+
+```sql
+  dblink('dbname=#{ENV['DB_NAME']} user=#{ENV['DB_USER']} password=#{ENV['DB_PASSWD']}', 'SELECT * FROM SOME_SQL')
+```
+
 ## 0.0.5 – Bugfixes and test
 
 I fixed issues making the gem not working + added a more complex example/test. You can call "rake test" into the dummy to check (even if it's not automated unit test...).
@@ -60,7 +79,7 @@ Quite simple. Add rails_db_view in your Gemfile:
 gem 'rails_db_views', github: 'anykeyh/rails_db_views'
 ```
 
-Note: Don't use the rubygem one, it's probably outdated...
+*Note: Don't use the rubygem one, it's probably outdated...*
 
 ## Views
 You create your views into `db/views` directory (create the directory if needed).

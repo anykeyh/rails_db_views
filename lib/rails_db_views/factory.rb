@@ -1,6 +1,5 @@
 
 class RailsDbViews::Factory
-  class AmbigousNameError < RuntimeError; end
 
   @symbols = {}
 
@@ -14,7 +13,7 @@ class RailsDbViews::Factory
         symbol = symbol_class.new(file)
 
         if s=@symbols[symbol_class.to_s][symbol.name]
-          raise AmbigousNameError, "between #{file} and #{s.path}"
+          raise RailsDbViews::AmbigousNameError, "between #{file} and #{s.path}"
         end
 
         @symbols[symbol_class.to_s][symbol.name] = symbol

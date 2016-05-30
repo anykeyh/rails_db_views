@@ -1,10 +1,8 @@
 class RailsDbViews::DatabaseSymbol
-  class CircularReferenceError < RuntimeError; end
-  class SymbolNotFound < RuntimeError; end
-  class IllegalDirective < RuntimeError; end
-
   attr_accessor :path, :sql_content, :status, :required, :inverse_of_required, :marked_as_deleted, :name
   alias :marked_as_deleted? :marked_as_deleted
+
+  STRING_INTERPOLATION      = /((.?)\#\{([^\}]*)\})/
 
   module Status
     LOADED      = :loaded
@@ -49,8 +47,19 @@ class RailsDbViews::DatabaseSymbol
     status == Status::UNLOADED
   end
 
+
+  def process_string_interpolation str
+    str.gsub(STRING_INTERPOLATION) do |x|
+      if $2 == '\\'
+        $1[1..-1] #Rendering the whole expression because of escape char.
+      else
+        $2 + (TOPLEVEL_BINDING.eval($3)).to_s
+      end
+    end
+  end
+
   def uncommented_sql_content
-    sql_content.split("\n").reject{|x| x=~ COMMENTS }.join("\n")
+    process_string_interpolation(sql_content.split("\n").reject{|x| x=~ COMMENTS }.join("\n"))
   end
 
   def create!
@@ -118,11 +127,11 @@ protected
   COMMENTS           = /#{COMMENTS_TWO_DASH}|#{COMMENTS_SHARP}/
 
   def circular_reference_error
-    raise CircularReferenceError, "Circular file reference! (file: #{path})"
+    raise RailsDbViews::CircularReferenceError, "Circular file reference! (file: #{path})"
   end
 
   def not_found_error(symbol_name)
-    raise SymbolNotFound, "#{self.class.name} `#{symbol_name}` referenced in file #{path} cannot be found..."
+    raise RailsDbViews::SymbolNotFound, "#{self.class.name} `#{symbol_name}` referenced in file #{path} cannot be found..."
   end
 
   def load_directives
@@ -139,7 +148,7 @@ protected
       when /^delete(d?)/
         self.mark_as_delete!
       else
-        raise IllegalDirective, "I don't know what to do with `#{d}` (in #{path})"
+        raise RailsDbViews::IllegalDirective, "I don't know what to do with `#{d}` (in #{path})"
       end
     end
 
