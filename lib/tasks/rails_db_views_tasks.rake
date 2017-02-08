@@ -46,10 +46,8 @@ end
 
 require 'rake/hooks'
 
-before("db:migrate"){ Rake::Task['db:drop_views'].invoke }
-before("db:migrate"){ Rake::Task['db:create_functions'].invoke }
-after("db:migrate"){ Rake::Task['db:create_views'].invoke }
-
-before("db:rollback"){ Rake::Task['db:drop_views'].invoke }
-before("db:rollback"){ Rake::Task['db:create_functions'].invoke }
-after("db:rollback"){ Rake::Task['db:create_views'].invoke }
+Rails.configuration.rails_db_views.migration_tasks.each do |task|
+  before(task){ Rake::Task['db:drop_views'].invoke }
+  before(task){ Rake::Task['db:create_functions'].invoke }
+  after(task){ Rake::Task['db:create_views'].invoke }
+end

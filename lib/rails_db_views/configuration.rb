@@ -1,6 +1,7 @@
 class RailsDbViews::Configuration
   attr_accessor :views_paths, :views_extension
   attr_accessor :functions_paths, :functions_extension
+  attr_accessor :migration_tasks
 
   def initialize
     @views_paths = %w(db/views)
@@ -8,6 +9,8 @@ class RailsDbViews::Configuration
 
     @functions_paths = %w(db/functions)
     @functions_extension = "*.sql"
+
+    @migration_tasks = %w(db:migrate db:rollback)
   end
 
   def [] *args

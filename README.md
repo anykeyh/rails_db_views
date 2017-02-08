@@ -158,6 +158,8 @@ Rails.configure do |config|
 
   config.rails_db_views.functions_path += %w( /some/function/path )
   config.rails_db_views.functions_extension = "*.sql"
+
+  config.rails_db_views.migration_tasks += %w( db:migrate:with_data )
 end
 ```
 
