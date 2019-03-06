@@ -7,9 +7,9 @@ end
 def expand_files paths, extension
   files = []
   paths.each do |path|
-    files = files + Dir[File.join(path, extension)].map{|x| File.expand_path(x)}.sort
+    files = files + Dir[File.join(path, extension)].map{|x| File.expand_path(x)}
   end
-  return files
+  return files.sort
 end
 
 namespace :db do
