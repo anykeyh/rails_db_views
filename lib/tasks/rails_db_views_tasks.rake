@@ -3,7 +3,7 @@ def apply_to paths, extension, method, klazz
 
   paths.each do |path|
     RailsDbViews::Factory.register_files klazz,
-      Dir[File.join(path, extension)].map{|x| File.expand_path(x)}
+      Dir[File.join(path, extension)].map{|x| File.expand_path(x)}.sort
   end
 
   RailsDbViews::Factory.send(method, klazz)
